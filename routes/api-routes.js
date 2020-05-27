@@ -1,5 +1,5 @@
 // const router = require("express").Router();
-// const Book = require("../models/Books.js");
+// const Expedition = require("../models/Expedition.js");
 
 // // tested, working with seeded value and posted value
 // router.get("/api/books", (req, res) => {
@@ -13,21 +13,14 @@
 //     });
 // });
 
-
-// //add one book (yes, I know)
-// //tested with tempinput.html
-// router.post("/api/books", ({ body }, res) => {
+// router.post("/api/createexpedition/:size", ({ body }, res) => {
 //   console.log(body)
-//   var newBook ={
-//     title: body.volumeInfo.title,
-//     description: body.volumeInfo.description,
-//     image: body.volumeInfo.imageLinks.thumbnail,
-//     authors: body.volumeInfo.authors,
-//     link: body.volumeInfo.infoLink
+//   var newExpedition ={
+//     hunts: body
 //   }
-//   Book.create(newBook)
-//     .then(newBook => {
-//       res.json(newBook);
+//   Expedition.create(newExpedition)
+//     .then(newExpedition => {
+//       res.json(newExpedition);
 //     })
 //     .catch(err => {
 //       console.log(err)
