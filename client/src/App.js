@@ -29,13 +29,13 @@ class App extends Component {
   // };
   componentDidMount() {
     console.log("Mounted");
-    // this.apiFoursquareSearch();
+    // // this.apiFoursquareSearch();
     // this.apiFoursquareExplore();
-    // this.apiFoursquareTrending();
-    // this.apiFoursquareLikes();
+    // // this.apiFoursquareTrending();
+    // // this.apiFoursquareLikes();
     // // this.apiFoursquareCategories();
-    // this.apiFoursquareSimilar();
-    // this.apiFoursquareNext();
+    // // this.apiFoursquareSimilar();
+    // // this.apiFoursquareNext();
     // this.apiFoursquareListed();
     this.apiGoogleInfo();    
 
@@ -377,18 +377,60 @@ class App extends Component {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     var url = googleSearchQueryURL; // site that doesn’t send Access-Control-*
     fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
-    .then(response => response.json())
-    .then(contents => console.log(contents))                    
-    .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
-    
-    var placeId ="ChIJuX92JKWAhYARxVmeb8DQIYQ"
+    .then(response => { 
+      return response.json()
+    })
+    .then(contents => {
 
-    var googleDetailsQueryURL = 'https://maps.googleapis.com/maps/api/place/details/json?place_id=' + placeId + '&fields=name,rating,photo,vicinity,url,type,icon,formatted_phone_number&key=AIzaSyDPvvtVkeRawK_SaFf2Kb-MAUPjhV1GWNs'
-    url = googleDetailsQueryURL
-    fetch(proxyurl + url)
-    .then(response => response.json())
-    .then(contents => console.log(contents))                    
-    .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+      var placeId = contents.candidates[0].place_id
+      console.log("Google Places ID: " + placeId)
+      
+      var googleDetailsQueryURL = 'https://maps.googleapis.com/maps/api/place/details/json?place_id=' + placeId + '&fields=name,rating,photo,vicinity,url,type,icon,formatted_phone_number&key=AIzaSyDPvvtVkeRawK_SaFf2Kb-MAUPjhV1GWNs'
+      url = googleDetailsQueryURL
+      fetch(proxyurl + url)
+      .then(response => { 
+        return response.json()
+      })
+      .then(contents => {
+        console.log(contents)
+        var googlePlacesData = contents.result
+        console.log("Google Places Name: " + googlePlacesData.name)
+        console.log("Google Places Phone Number: " + googlePlacesData.formatted_phone_number)
+        console.log("Google Places Icon: " + googlePlacesData.icon)
+        console.log("Google Places Rating: " + googlePlacesData.rating)
+        console.log("Google Places Vicinity: " + googlePlacesData.vicinity)
+        console.log("Google Places URL: " + googlePlacesData.url)
+        for (var i = 0; i < googlePlacesData.types.length; i++) {
+          console.log(i);
+          console.log("Google Places Types: " + googlePlacesData.types[i])                                             
+        }
+        for (var i = 0; i < googlePlacesData.photos.length; i++) {
+          console.log(i);
+          console.log("Google Places Photos References: " + googlePlacesData.photos[i].photo_reference)
+          
+          var tempGooglePhotoReference = googlePlacesData.photos[i].photo_reference
+          
+          // var hardcoded = "CmRaAAAA6e5kRgY2eP0xzlhz9YlRjwVciuHO0s0o7DPiZnNCXVxGl0AeHqh9K0_r-ll9dW0GOAtPdZEvjW6VF6oGrzLiH0umtpnFNdWUtyO-XCU6k48JkRHSz6bo7aZ6Ww79lTabEhALgAHDpGaR7cZIwYIL8q_CGhSy67ALV6yQFFojaP5CGdxS6QpKnw"
+          
+          var googlePhotosHref = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='+ tempGooglePhotoReference + '&key=AIzaSyDPvvtVkeRawK_SaFf2Kb-MAUPjhV1GWNs'
+          
+          console.log("Google Places Href: " + googlePhotosHref)                                             
+
+          // url = googlePhotosHref
+          // fetch(proxyurl + url)
+          // .then(response => { 
+          //   return response
+          // })
+          // .then(contents => {
+          //   console.log(contents)}
+          // )
+        }
+      })                    
+      .catch(error => console.log(error))
+    })                    
+    .catch(error => console.log(error))
+    
+    
   }
 
 

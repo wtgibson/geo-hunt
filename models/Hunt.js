@@ -45,40 +45,116 @@ const huntSchema = new Schema({
       trim: true,
     }
   },
-  nextInfo: {
-    nextName: {
+  relatedInfo1: {
+    relatedName: {
       type: String,
       trim: true,
     },
-    nextId: {
+    relatedId: {
       type: String,
       trim: true,
     },
-    nextLat: {
+    relatedLat: {
       type: String,
       trim: true,
     },
-    nextLng: {
+    relatedLng: {
       type: String,
       trim: true,
     },
-    nextCategory: {
+    relatedCategory: {
       type: String,
       trim: true,
     },
-    nextLikes: {
+    relatedLikes: {
       type: String,
       trim: true,
     },
-    nextAddress: {
+    relatedAddress: {
       type: String,
       trim: true,
     },
-    nextCrossStreets: {
+    relatedCrossStreets: {
       type: String,
       trim: true,
     },
-    nextNeighborhood: {
+    relatedNeighborhood: {
+      type: String,
+      trim: true,
+    },
+  },
+  relatedInfo2: {
+    relatedName: {
+      type: String,
+      trim: true,
+    },
+    relatedId: {
+      type: String,
+      trim: true,
+    },
+    relatedLat: {
+      type: String,
+      trim: true,
+    },
+    relatedLng: {
+      type: String,
+      trim: true,
+    },
+    relatedCategory: {
+      type: String,
+      trim: true,
+    },
+    relatedLikes: {
+      type: String,
+      trim: true,
+    },
+    relatedAddress: {
+      type: String,
+      trim: true,
+    },
+    relatedCrossStreets: {
+      type: String,
+      trim: true,
+    },
+    relatedNeighborhood: {
+      type: String,
+      trim: true,
+    },
+  },
+  relatedInfo3: {
+    relatedName: {
+      type: String,
+      trim: true,
+    },
+    relatedId: {
+      type: String,
+      trim: true,
+    },
+    relatedLat: {
+      type: String,
+      trim: true,
+    },
+    relatedLng: {
+      type: String,
+      trim: true,
+    },
+    relatedCategory: {
+      type: String,
+      trim: true,
+    },
+    relatedLikes: {
+      type: String,
+      trim: true,
+    },
+    relatedAddress: {
+      type: String,
+      trim: true,
+    },
+    relatedCrossStreets: {
+      type: String,
+      trim: true,
+    },
+    relatedNeighborhood: {
       type: String,
       trim: true,
     },
@@ -101,6 +177,48 @@ const huntSchema = new Schema({
       trim: true,
     },
     listType: {
+      type: String,
+      trim: true,
+    }
+  },
+  clues: {
+    clue1: {
+      type: String,
+      trim: true,
+    },
+    clue2: {
+      type: String,
+      trim: true,
+    },
+    clue3: {
+      type: String,
+      trim: true,
+    },      
+    clue4: {
+      type: String,
+      trim: true,
+    },
+    clue5: {
+      type: String,
+      trim: true,
+    },
+    clue6: {
+      type: String,
+      trim: true,
+    },
+    clue7: {
+      type: String,
+      trim: true,
+    },
+    clue8: {
+      type: String,
+      trim: true,
+    },      
+    clue9: {
+      type: String,
+      trim: true,
+    },
+    clue10: {
       type: String,
       trim: true,
     }
