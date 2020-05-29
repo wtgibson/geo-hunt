@@ -24,6 +24,11 @@ const huntSchema = new Schema({
       trim: true,
       required: "Target Lng required"
     },
+    targetAccuracy: {
+      type: Number,
+      trim: true,
+      required: "Target Lng required"
+    },
     targetCategory: {
       type: String,
       trim: true,
@@ -43,64 +48,74 @@ const huntSchema = new Schema({
     targetNeighborhood: {
       type: String,
       trim: true,
+    },
+    targetFactoid: {
+      type: String,
+      trim: true,
+    },
+    targetPhoto: {
+      type: String,
+      trim: true,
+    },
+    targetGooglePlaceId: {
+      type: String,
+      trim: true,
+    },
+    targetRating: {
+      type: String,
+      trim: true,
+    },
+    targetVicinity: {
+      type: String,
+      trim: true,
+    },
+    targetTypes: {
+      type: String,
+      trim: true,
+    },
+    targetURL: {
+      type: String,
+      trim: true,
     }
   },
-  nextInfo: {
-    nextName: {
+  clues: {
+    clue1: {
       type: String,
       trim: true,
     },
-    nextId: {
+    clue2: {
       type: String,
       trim: true,
     },
-    nextLat: {
-      type: String,
-      trim: true,
-    },
-    nextLng: {
-      type: String,
-      trim: true,
-    },
-    nextCategory: {
-      type: String,
-      trim: true,
-    },
-    nextLikes: {
-      type: String,
-      trim: true,
-    },
-    nextAddress: {
-      type: String,
-      trim: true,
-    },
-    nextCrossStreets: {
-      type: String,
-      trim: true,
-    },
-    nextNeighborhood: {
-      type: String,
-      trim: true,
-    },
-  },
-  listInfo: {
-    listName: {
-      type: String,
-      trim: true,
-    },
-    listDescription: {
-      type: String,
-      trim: true,
-    },
-    listLength: {
+    clue3: {
       type: String,
       trim: true,
     },      
-    listFollowers: {
+    clue4: {
       type: String,
       trim: true,
     },
-    listType: {
+    clue5: {
+      type: String,
+      trim: true,
+    },
+    clue6: {
+      type: String,
+      trim: true,
+    },
+    clue7: {
+      type: String,
+      trim: true,
+    },
+    clue8: {
+      type: String,
+      trim: true,
+    },      
+    clue9: {
+      type: String,
+      trim: true,
+    },
+    clue10: {
       type: String,
       trim: true,
     }
