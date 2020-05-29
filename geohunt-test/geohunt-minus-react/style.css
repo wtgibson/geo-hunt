@@ -1,0 +1,11 @@
+.navbar {
+    background-color: blue;
+}
+
+section {
+    float: left;
+}
+
+aside {
+    float: right;
+}
