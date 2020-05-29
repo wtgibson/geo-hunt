@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-app.use(express.static("public"));
+app.use(express.static("client/build"));
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
@@ -72,70 +72,53 @@ app.get("/api/createexpedition/:size", ({ params }, res) => {
     });
 });
 
-// app.post("/api/creathunt/", ({ body }, res) => {
-//   console.log(body)
-//   var newHunt = {
-//     targetInfo: {
-//       targetName: body,
-//       targetId: body,
-//       targetLat: body,
-//       targetLng: body,
-//       targetCategory: body,
-//       targetLikes: body,
-//       targetAddress: body,
-//       targetCrossStreets: body,
-//       targetNeighborhood: body
-//     },
-//     relatedInfo1: {
-//         nextName: body,
-//         nextId: body,
-//         nextLat: body,
-//         nextLng: body,
-//         nextCategory: body,
-//         nextLikes: body,
-//         nextAddress: body,
-//         nextCrossStreets: body,
-//         nextNeighborhood: body
-//     },
-//     relatedInfo2: {
-//       nextName: body,
-//       nextId: body,
-//       nextLat: body,
-//       nextLng: body,
-//       nextCategory: body,
-//       nextLikes: body,
-//       nextAddress: body,
-//       nextCrossStreets: body,
-//       nextNeighborhood: body
-//     },
-//     relatedInfo3: {
-//       nextName: body,
-//       nextId: body,
-//       nextLat: body,
-//       nextLng: body,
-//       nextCategory: body,
-//       nextLikes: body,
-//       nextAddress: body,
-//       nextCrossStreets: body,
-//       nextNeighborhood: body
-//     },
-//     listInfo: {
-//         listName: body,
-//         listDescription: body,
-//         listLength: body,      
-//         listFollowers: body,
-//         listType: body
-//     }
-//   }
-//   Hunt.create(newHunt)
-//     .then(newHunt => {
-//       res.json(newHunt);
-//     })
-//     .catch(err => {
-//       console.log(err)
-//       res.status(400).json(err);
-//     });
-// });
+app.post("/api/creathunt/", ({ body }, res) => {
+  console.log(body)
+  var newHunt = {
+    targetInfo: {
+        targetName: name,
+        targetId: id,
+        targetLat: lat,
+        targetLng: lng,
+        targetAccuracy: 0.025,
+        targetCategory: category,
+        targetLikes: likes,
+        targetAddress: address,
+        targetCrossStreets: crossStreet,
+        targetNeighborhood: neighborhood,
+        targetFactoid: "Insert Factoid",
+        targetPhoto: googlePhotosLinks,
+        targetGooglePlacesId: targetGooglePlacesId,
+        targetRating: googleRating,
+        targetVicinity: googleVicinity,
+        targetTypes: googleTypes,
+        targetURL: googleURL
+    },
+    clues: {
+        clue1: "Insert Clue 1",
+        clue2: "Insert Clue 2",
+        clue3: "Insert Clue 3",
+        clue4: "Insert Clue 4",
+        clue5: "Insert Clue 5",
+        clue6: "Insert Clue 6",
+        clue7: "Insert Clue 7",
+        clue8: "Insert Clue 8",      
+        clue9: "Insert Clue 9",
+        clue10: "Insert Clue 10"
+    }
+  }
+
+  Hunt.collection.insertOne(newHunt)
+    .then(data => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+    })
+    .catch(err => {
+    console.error(err);
+    process.exit(1);
+    });
+
+});
 
 app.delete("/api/hunt/:id", (req, res) => {
   Hunt.deleteOne({
@@ -148,8 +131,13 @@ app.delete("/api/hunt/:id", (req, res) => {
 
 // Send every other request to the React app
 // Define any API routes before this runs
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/public/index.html"));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+app.get("/createhunt", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/create-hunt.html"));
 });
 
 app.listen(PORT, () => {

@@ -24,6 +24,11 @@ const huntSchema = new Schema({
       trim: true,
       required: "Target Lng required"
     },
+    targetAccuracy: {
+      type: Number,
+      trim: true,
+      required: "Target Lng required"
+    },
     targetCategory: {
       type: String,
       trim: true,
@@ -43,140 +48,32 @@ const huntSchema = new Schema({
     targetNeighborhood: {
       type: String,
       trim: true,
-    }
-  },
-  relatedInfo1: {
-    relatedName: {
+    },
+    targetFactoid: {
       type: String,
       trim: true,
     },
-    relatedId: {
+    targetPhoto: {
       type: String,
       trim: true,
     },
-    relatedLat: {
+    targetGooglePlaceId: {
       type: String,
       trim: true,
     },
-    relatedLng: {
+    targetRating: {
       type: String,
       trim: true,
     },
-    relatedCategory: {
+    targetVicinity: {
       type: String,
       trim: true,
     },
-    relatedLikes: {
+    targetTypes: {
       type: String,
       trim: true,
     },
-    relatedAddress: {
-      type: String,
-      trim: true,
-    },
-    relatedCrossStreets: {
-      type: String,
-      trim: true,
-    },
-    relatedNeighborhood: {
-      type: String,
-      trim: true,
-    },
-  },
-  relatedInfo2: {
-    relatedName: {
-      type: String,
-      trim: true,
-    },
-    relatedId: {
-      type: String,
-      trim: true,
-    },
-    relatedLat: {
-      type: String,
-      trim: true,
-    },
-    relatedLng: {
-      type: String,
-      trim: true,
-    },
-    relatedCategory: {
-      type: String,
-      trim: true,
-    },
-    relatedLikes: {
-      type: String,
-      trim: true,
-    },
-    relatedAddress: {
-      type: String,
-      trim: true,
-    },
-    relatedCrossStreets: {
-      type: String,
-      trim: true,
-    },
-    relatedNeighborhood: {
-      type: String,
-      trim: true,
-    },
-  },
-  relatedInfo3: {
-    relatedName: {
-      type: String,
-      trim: true,
-    },
-    relatedId: {
-      type: String,
-      trim: true,
-    },
-    relatedLat: {
-      type: String,
-      trim: true,
-    },
-    relatedLng: {
-      type: String,
-      trim: true,
-    },
-    relatedCategory: {
-      type: String,
-      trim: true,
-    },
-    relatedLikes: {
-      type: String,
-      trim: true,
-    },
-    relatedAddress: {
-      type: String,
-      trim: true,
-    },
-    relatedCrossStreets: {
-      type: String,
-      trim: true,
-    },
-    relatedNeighborhood: {
-      type: String,
-      trim: true,
-    },
-  },
-  listInfo: {
-    listName: {
-      type: String,
-      trim: true,
-    },
-    listDescription: {
-      type: String,
-      trim: true,
-    },
-    listLength: {
-      type: String,
-      trim: true,
-    },      
-    listFollowers: {
-      type: String,
-      trim: true,
-    },
-    listType: {
+    targetURL: {
       type: String,
       trim: true,
     }
