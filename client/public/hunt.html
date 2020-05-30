@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>GeoHunt</title>
+  <style>
+    #map,
+    #pano {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="modal fade" id="myModalIntro" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">GeoHunt</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Welcome to GeoHunt, an online scavenger game.</p>
+
+          <p>Pegman needs to go to the destination, except his 'friends' only gave him hints. Help move "pegman" to the
+            target given the hints/clues available. Once you think he's there, click <span>Arrived (I think)</span>
+            button. Do it fast, as you are losing points EVERY second. The faster you get Pegman there, the more points
+            you keep. However, if you got it wrong (or not close enough) you get points taken away! </p>
+
+          <p>You can drag Pegman around the map, and both streetview and the map will follow. </p>
+
+          <p>NOTE: You MUST drag pegman himself. You must drop pegman onto one of the blue paths. If you don't, pegman
+            will go back into hiding in the lower-right corner of the map, and you have to drag and drop him onto the
+            map again.
+          </p>
+
+          <p>Ready to play? Please select length of your expedition (i.e. how many hunts, max = 5).</p>
+
+          <select id="expeditionLength" name="Length">
+            <option value="1">1</option>
+            <option selected value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <!-- <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option> -->
+          </select>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick=startExpedition()>Let's
+            Go!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalEndExpedition" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Expedition End</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Your GeoHunt expedition has ended.</p>
+
+          <p>Your total score is <span id="mytotalscore">0</span></p>
+
+          <p>over <span id="myexpeditionlength">0</span> hunts</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalinitGame" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Begin Hunt</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <p>Are you ready...</p>
+
+          <p>for hunt number <span id="mycurrenthunt">0</span>?</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick=initTick() data-dismiss="modal">Ready!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade modal-lg" id="myModalranOut" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Out of Time</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <p>Sorry, but you ran out of time.</p>
+
+          <p>Your score for this hunt is 0.</p>
+
+          <p>Your target was: <span id="yourtarget"></span></p>
+
+          <p><span id="targetphoto"></span></p>
+
+          <hr />
+
+          <p><b>Fun Trivia: </b><span id="myfactoid"></span></p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Too Bad...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade modal-lg" id="myModalfoundit" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Target Found!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <p>You found the target: <span id="yourtarget2"></span>!</p>
+
+          <p><span id="targetphoto2"></span></p>
+
+          <p>Your score for this hunt is <span id="mycurscore">0</span></p>
+
+          <hr />
+
+          <p><b>Fun Trivia: </b><span id="myfactoid2"></span></p>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onClick=endHunt(); data-dismiss="modal">All right!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalnotClose" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Not Close Enough</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <p>Sorry, but you are NOT close enough to the target!</p>
+
+          <p>You just suffered a <span id="mypenalty"></span> penalty.</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Argh!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">GeoHunt</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Go Hunt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/createhunt">Create Hunt</a>
+            </li>          
+          </ul>
+        </div>
+
+      </div>
+      
+    </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="row" id="map"></div>
+        <div class="row" id="pano"></div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="curScore">Current Hunt Score: </label>
+          <input type="text" id="curScore" readonly size=3 />&nbsp;
+          <label for="totalScore">Expedition Score: </label>
+          <input type="text" id="totalScore" readonly size=3 />
+        </div>
+
+        <button type="button" class="btn btn-danger" onclick=isCloseEnough()>Arrived (I think)</button>
+
+        <button type="button" class="btn btn-info" onclick=calcDistance()>Distance</button>
+
+        <button type="button" class="btn btn-info" onclick=calcBearing()>Bearing</button>
+        <h3>Hints go here</h3>
+        <div id="hintshere">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const startScore = 1000;
+    const penalty = 100;
+    const persecond = 3;
+    const hintfrequency = 6 // per minute
+    var items = [];
+    var data = [];
+
+    //hardcoded to 2 at this point. Will replace with number later. 
+    $.ajax({
+      type: 'GET',
+      url: "http://localhost:3001/api/createexpedition/2",
+      // dataType: 'json',
+      // data: data,
+      async: false
+    }).done(function (datareq) {
+      console.log(datareq)
+      data = datareq
+    })
+      .fail(function () {
+        console.log("Failed to retrieve expedition from server")
+      })
+
+    //data now contains 2 objects  (0, 1) each in the specific format
+
+    //which we shall convert into "dataAll" one at a time with dataSingle
+    var dataAll = [];
+
+    data.forEach(d => {
+      // console.log(d)
+      var dataSingle = {}
+      var dataClues = []
+      dataSingle.id = d.targetInfo.targetId
+      dataSingle.target = d.targetInfo.targetName
+      dataSingle.accuracy = d.targetInfo.targetAccuracy
+      dataSingle.latlng = { lat: d.targetInfo.targetLat, lng: d.targetInfo.targetLng }
+      dataSingle.factoid = d.targetInfo.targetFactoid
+      dataSingle.photo = d.targetInfo.targetPhoto
+      dataClues.push("The target category is '" + d.targetInfo.targetCategory + "'")
+      dataClues.push(d.clues.clue1)
+      dataClues.push("Target hint is '" + noConsonants(d.targetInfo.targetName) + "'")
+      dataClues.push(d.clues.clue2)
+      if (d.targetInfo.targetCrossStreets !== "") {
+        dataClues.push("Target cross-street is '" + d.targetInfo.targetCrossStreets + "'")
+      } else {
+        dataClues.push("Target does NOT have a cross-street.")
+      }
+      dataClues.push(d.clues.clue3)
+      dataClues.push("First letter in target name is " + d.targetInfo.targetName[0])
+      dataClues.push(d.clues.clue4)
+      dataClues.push(d.clues.clue5)
+      dataClues.push(d.clues.clue6)
+      dataClues.push(d.clues.clue7)
+      dataClues.push(d.clues.clue8)
+      dataClues.push(d.clues.clue9)
+      dataClues.push(d.clues.clue10)
+      dataSingle.clues = dataClues
+      // console.log(dataSingle)
+      dataAll.push(dataSingle)
+    })
+
+    console.log(dataAll)
+
+    var totalScore = 0
+    var curScore = startScore
+    var scoreInterval, hintInterval, data
+
+    var curhunt = 0;
+    var curhint = 0;
+    var expedition = [1, 2];
+    var huntaccuracy
+
+    function noConsonants(testString) {
+      let characterArray = testString.split("")
+      return characterArray.map(character => {
+        if (/[a - zA - Z ^aeiouAEIOU\s]/.test(character)) {
+          if (character === " ") { return character }
+          else { return character }
+        } else { return "_" }
+      }).join("")
+    }
+
+    function perTick() {
+      curScore -= persecond;
+      $("#curScore").val(curScore);
+      if (curScore <= 0) {
+        ranOutofTime();
+      }
+    }
+
+    function initHint() {
+      //pre-display X hints where x=2 
+      $("#hintshere").html(
+        "<p>" + data.clues[0] + "</p>" +
+        "<p>" + data.clues[1] + "</p>");
+      curhint = 2
+    }
+
+    function perHint() {
+      // just display a hint, watch out so we don't run out of hints, as 0-24 is all we got
+      var existinghint = $("#hintshere").html()
+      if (curhint < 24) {
+        $("#hintshere").html(existinghint + "<p>" + data.clues[curhint] + "</p>");
+        curhint++;
+      }
+    }
+
+    function startExpedition() {
+      // curhunt=0
+      totalScore = 0
+      $("#totalScore").val(totalScore)
+      // while (curhunt < expedition.length) {
+      initGame();
+      // }
+    }
+
+    function endExpedition() {
+      // alert("That's it! Your total score is " + totalScore + " over " + expedition.length + " hunts")
+      let el = expedition.length
+      $('#mytotalscore').html(totalScore.toString())
+      $('#myexpeditionlength').html(el.toString())
+      $('#myModalEndExpedition').modal('show');
+    }
+
+    function initGame() {
+      // console.log("curhunt = ", curhunt)
+      // console.log("expedition length = " + expedition.length.toString())
+
+      curScore = 1000;
+      $("#curScore").val(curScore)
+      // test data, it's supposed to be read from the server
+      data = dataAll[curhunt]
+      // console.log(data)
+      huntTarget = data.latlng;
+      huntaccuracy = data.accuracy;
+      curhint = 0;
+      console.log(data)
+      //reset hint area
+      $("#hintshere").html("")
+      let t = curhunt + 1
+      $('#mycurrenthunt').html(t.toString())
+
+      $('#myModalinitGame').modal('show')
+      // alert("Get ready for... Hunt number " + (curhunt + 1) + "!!!!!!")
+
+      // initTick();
+    }
+
+    function endHunt() {
+      //transfer current score to total score
+      totalScore += curScore
+      //update display
+      $("#totalScore").val(totalScore)
+      // increment clue
+      curhunt++;
+      if (curhunt >= expedition.length) {
+        // end of the line!
+        endExpedition();
+      } else initGame(); // next round/hunt!
+    }
+
+    function initTick() {
+      console.log('Starting ticks')
+      initHint();
+      scoreInterval = setInterval(perTick, 1000)
+      hintInterval = setInterval(perHint, 60 / hintfrequency * 1000)
+    }
+
+    function clearTick() {
+      console.log('Stopped ticks')
+      clearInterval(scoreInterval)
+      clearInterval(hintInterval)
+    }
+
+    function ranOutofTime() {
+      clearTick();
+      // alert("Sorry, you ran out of time. Your hunt score is ZERO. ")
+      $('#yourtarget').html(data.target)
+      $('#myfactoid').html(data.factoid)
+      $('#targetphoto').html("<img src='" + data.photo + "' width='400px'>")
+      $('#myModalranOut').modal('show')
+      endHunt();
+    }
+
+    function isCloseEnough() {
+      console.log("Close enough?")
+      if (haversine_distance(curCenter, huntTarget) < huntaccuracy) {
+        //you found it!!!!!  stop the clock
+        clearTick();
+        // alert("YOU FOUND IT! Your hunt score is " + curScore)
+        // totalScore += curScore
+        $('#yourtarget2').html(data.target)
+        $('#targetphoto2').html("<img src='" + data.photo + "' width='400px'>")
+        $('#mycurscore').html(curScore.toString())
+        $('#myfactoid2').html(data.factoid)
+        $('#myModalfoundit').modal('show')
+        // alert(data.factoid)
+        console.log("Yes!")
+        // endHunt();
+      } else {
+        // wah wah wah...
+        // alert("Sorry, you're not close enough!")
+        $('#myModalnotClose').modal('show')
+        console.log("Nope!")
+        curScore -= penalty
+        if (curScore < 0) {
+          ranOutofTime();
+        }
+      }
+    }
+
+    function calcBearing() {
+
+      start_latitude = curCenter.lat
+      start_longitude = curCenter.lng
+      stop_latitude = huntTarget.lat
+      stop_longitude = huntTarget.lng
+
+      var y = Math.sin(stop_longitude - start_longitude) * Math.cos(stop_latitude);
+      var x = Math.cos(start_latitude) * Math.sin(stop_latitude) -
+        Math.sin(start_latitude) * Math.cos(stop_latitude) * Math.cos(stop_longitude - start_longitude);
+      var brng = Math.atan2(y, x) * 180 / Math.PI;
+      // return brng
+      if (brng < 0) {
+        brng += 360
+      }
+      console.log(brng)
+
+      dir = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"]
+      brng2 = (brng - 22.5) / 45
+
+      // alert("Brng2 = " + brng2 + " / " + dir[Math.ceil(brng2)])
+      alert("Your target is to the " + dir[Math.ceil(brng2)])
+    }
+
+    function haversine_distance(mk1, mk2) {
+      var R = 3958.8; // Radius of the Earth in miles
+      var rlat1 = mk1.lat * (Math.PI / 180); // Convert degrees to radians
+      var rlat2 = mk2.lat * (Math.PI / 180); // Convert degrees to radians
+      var difflat = rlat2 - rlat1; // Radian difference (latitudes)
+      var difflon = (mk2.lng - mk1.lng) * (Math.PI / 180); // Radian difference (longitudes)
+
+      var d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
+      return d;
+    }
+
+    const sf = { lat: 37.7749, lng: -122.4194 };
+    var curCenter = sf
+
+    function calcDistance() {
+      // const p1 = LatLon.parse(curCenter.lat + "," + curCenter.lng)
+      // const p2 = LatLon.parse(twinPeaks.lat + "," + twinPeaks.lng)
+      // console.log(curCenter)
+      var dist = haversine_distance(curCenter, huntTarget)
+      console.log(dist)
+      let dist2 = dist.toPrecision(1);
+      alert("Dist = " + dist2)
+    }
+
+    function initialize() {
+      // var mapOptions = { disableDefaultUI: true}
+      // var sf = { lat: 37.7749, lng: -122.4194 };
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: sf,
+        zoom: 16,
+        panControl: false,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: true,
+        overviewMapControl: false,
+        rotateControl: false,
+        scrollWheel: true,
+      });
+      map.addListener('position_changed', function () {
+        panorama.setPosition(map.getCenter());
+      })
+      var panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('pano'), {
+        position: sf,
+        pov: {
+          heading: 0,
+          pitch: 0
+        }
+      });
+      map.setStreetView(panorama);
+      panorama.addListener('position_changed', function () {
+        map.setCenter(panorama.getPosition());
+        curCenter = map.getCenter().toJSON();
+      });
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUFRV2Qv6kYtvjmASK8HOve2VBWRAc9N8&callback=initialize"> </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script>
+    $(window).on('load', function () {
+      //display the "intro" modal
+      $('#myModalIntro').modal('show');
+
+    });
+  </script>
+</body>
+
+</html>
