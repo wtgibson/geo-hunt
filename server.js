@@ -83,39 +83,39 @@ app.get("/api/createexpedition/:size", ({ params }, res) => {
     });
 });
 
-app.post("/api/creathunt/", ({ body }, res) => {
+app.post("/api/createhunt/", ({ body }, res) => {
   console.log(body)
   var newHunt = {
     targetInfo: {
-      targetName: name,
-      targetId: id,
-      targetLat: lat,
-      targetLng: lng,
+      targetName: body.targetName,
+      targetId: body.targetId,
+      targetLat: body.targetLat,
+      targetLng: body.targetLng,
       targetAccuracy: 0.025,
-      targetCategory: category,
-      targetLikes: likes,
-      targetAddress: address,
-      targetCrossStreets: crossStreet,
-      targetNeighborhood: neighborhood,
-      targetFactoid: "Insert Factoid",
-      targetPhoto: googlePhotosLinks,
-      targetGooglePlacesId: targetGooglePlacesId,
-      targetRating: googleRating,
-      targetVicinity: googleVicinity,
-      targetTypes: googleTypes,
-      targetURL: googleURL
+      targetCategory: body.targetCategory,
+      targetLikes: body.targetLikes,
+      targetAddress: body.targetAddress,
+      targetCrossStreets: body.targetCrossStreets,
+      targetNeighborhood: body.targetNeighborhood,
+      targetFactoid: body.targetFactoid,
+      targetPhoto: body.targetPhoto,
+      targetGooglePlacesId: body.targetGooglePlacesId,
+      targetRating: body.targetRating,
+      targetVicinity: body.targetVicinity,
+      targetTypes: body.targetTypes,
+      targetURL: body.targetURL
     },
     clues: {
-      clue1: "Insert Clue 1",
-      clue2: "Insert Clue 2",
-      clue3: "Insert Clue 3",
-      clue4: "Insert Clue 4",
-      clue5: "Insert Clue 5",
-      clue6: "Insert Clue 6",
-      clue7: "Insert Clue 7",
-      clue8: "Insert Clue 8",
-      clue9: "Insert Clue 9",
-      clue10: "Insert Clue 10"
+      clue1: body.clue1,
+      clue2: body.clue2,
+      clue3: body.clue3,
+      clue4: body.clue4,
+      clue5: body.clue5,
+      clue6: body.clue6,
+      clue7: body.clue7,
+      clue8: body.clue8,
+      clue9: body.clue9,
+      clue10: body.clue10
     }
   }
 
@@ -149,6 +149,18 @@ app.get("/", (req, res) => {
 
 app.get("/createhunt", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/create-hunt.html"));
+});
+
+app.get("/api/hunt/:id", (req, res) => {
+  Hunt.find({
+    "targetInfo.targetId": req.params.id
+  })
+    .then(hunt => {
+      res.json(hunt);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
 });
 
 app.listen(PORT, () => {
