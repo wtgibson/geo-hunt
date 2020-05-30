@@ -36,28 +36,39 @@ app.get("/api/hunts", (req, res) => {
     });
 });
 
+app.get("/api/hunt/:id", (req, res) => {
+  Hunt.find({
+    "targetInfo.targetId": req.params.id
+  })
+    .then(hunt => {
+      res.json(hunt);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
 app.get("/api/createexpedition/:size", ({ params }, res) => {
   // console.log(params.size)
   Hunt.find({})
     .then(hunt => {
       // Randomize and pick 5 and send
-      const huntArray = Object.keys(hunt).map(i => hunt[i])      
+      const huntArray = Object.keys(hunt).map(i => hunt[i])
 
-      for(var i = huntArray.length -1; i > 0; i--) {
+      for (var i = huntArray.length - 1; i > 0; i--) {
         // Random number generated used to swap hunts
         var j = Math.floor(Math.random() * (i + 1))
         var temp = huntArray[i];
         huntArray[i] = huntArray[j];
-        huntArray[j] = temp        
+        huntArray[j] = temp
       };
 
       var Expedition = []
 
       for (var v = 0; v < params.size; v++) {
         // console.log(v)
-      
+        // Expedition.push(huntArray[v].targetInfo.targetId)
         Expedition.push(huntArray[v])
-
       };
 
       // console.log(huntArray)
@@ -65,7 +76,7 @@ app.get("/api/createexpedition/:size", ({ params }, res) => {
       // console.log(Expedition)
 
       res.json(Expedition);
-      
+
     })
     .catch(err => {
       res.status(400).json(err);
@@ -76,46 +87,46 @@ app.post("/api/creathunt/", ({ body }, res) => {
   console.log(body)
   var newHunt = {
     targetInfo: {
-        targetName: name,
-        targetId: id,
-        targetLat: lat,
-        targetLng: lng,
-        targetAccuracy: 0.025,
-        targetCategory: category,
-        targetLikes: likes,
-        targetAddress: address,
-        targetCrossStreets: crossStreet,
-        targetNeighborhood: neighborhood,
-        targetFactoid: "Insert Factoid",
-        targetPhoto: googlePhotosLinks,
-        targetGooglePlacesId: targetGooglePlacesId,
-        targetRating: googleRating,
-        targetVicinity: googleVicinity,
-        targetTypes: googleTypes,
-        targetURL: googleURL
+      targetName: name,
+      targetId: id,
+      targetLat: lat,
+      targetLng: lng,
+      targetAccuracy: 0.025,
+      targetCategory: category,
+      targetLikes: likes,
+      targetAddress: address,
+      targetCrossStreets: crossStreet,
+      targetNeighborhood: neighborhood,
+      targetFactoid: "Insert Factoid",
+      targetPhoto: googlePhotosLinks,
+      targetGooglePlacesId: targetGooglePlacesId,
+      targetRating: googleRating,
+      targetVicinity: googleVicinity,
+      targetTypes: googleTypes,
+      targetURL: googleURL
     },
     clues: {
-        clue1: "Insert Clue 1",
-        clue2: "Insert Clue 2",
-        clue3: "Insert Clue 3",
-        clue4: "Insert Clue 4",
-        clue5: "Insert Clue 5",
-        clue6: "Insert Clue 6",
-        clue7: "Insert Clue 7",
-        clue8: "Insert Clue 8",      
-        clue9: "Insert Clue 9",
-        clue10: "Insert Clue 10"
+      clue1: "Insert Clue 1",
+      clue2: "Insert Clue 2",
+      clue3: "Insert Clue 3",
+      clue4: "Insert Clue 4",
+      clue5: "Insert Clue 5",
+      clue6: "Insert Clue 6",
+      clue7: "Insert Clue 7",
+      clue8: "Insert Clue 8",
+      clue9: "Insert Clue 9",
+      clue10: "Insert Clue 10"
     }
   }
 
   Hunt.collection.insertOne(newHunt)
     .then(data => {
-    console.log(data.result.n + " records inserted!");
-    process.exit(0);
+      console.log(data.result.n + " records inserted!");
+      process.exit(0);
     })
     .catch(err => {
-    console.error(err);
-    process.exit(1);
+      console.error(err);
+      process.exit(1);
     });
 
 });
