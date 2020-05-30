@@ -7,27 +7,27 @@ const huntSchema = new Schema({
     targetName: {
       type: String,
       trim: true,
-      required: "Target name required"
+      // required: "Target Name required"
     },
     targetId: {
       type: String,
       trim: true,
-      required: "Target ID required"
+      // required: "Target ID required"
     },
     targetLat: {
       type: String,
       trim: true,
-      required: "Target Lat required"
+      // required: "Target Lat required"
     },
     targetLng: {
       type: String,
       trim: true,
-      required: "Target Lng required"
+      // required: "Target Lng required"
     },
     targetAccuracy: {
       type: Number,
       trim: true,
-      required: "Target Lng required"
+      // required: "Target Accuracy required"
     },
     targetCategory: {
       type: String,
