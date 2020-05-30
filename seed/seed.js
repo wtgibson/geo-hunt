@@ -3,6 +3,9 @@ const Hunt = require("../models/Hunt.js");
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/geohunt");
 
+// const request = require('request');
+// const fetch = require("node-fetch");
+
 const huntSeed1 = {
     targetInfo: {
         targetName: "Twin Peaks",
@@ -72,37 +75,37 @@ const huntSeed2 = {
 }
 
 const huntSeed3 = {
-    targetInfo: {
-        targetName: "Palace of Fine Arts",
-        targetId: "4468f484f964a5204f331fe3",
-        targetLat: "37.8020",
-        targetLng: "-122.4486",
-        targetAccuracy: 0.025,
-        targetCategory: "Historic Sites",
-        targetLikes: "2171 Likes",
-        targetAddress: "3301 Lyon St San Francisco, CA 94123 United States",
-        targetCrossStreets: "btwn Bay & Jefferson St",
-        targetNeighborhood: "",
-        targetFactoid: "Originally built for the 1915 Panama-Pacific Exposition, the Palace of Fine Arts was preserved due to the efforts of Phoebe Apperson Hearst, mother of William Randolph Hearst.",
-        targetPhoto: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Palaceofarts.jpg",
-        targetGooglePlacesId: "",
-        targetRating: "",
-        targetVicinity: "",
-        targetTypes: [""],
-        targetURL: ""
-    },
-    clues: {
-        clue1: "Beaux-Arts architecture",
-        clue2: "Originally built in 1915 in order to exhibit works of art",
-        clue3: "Conceived to evoke a decaying ruin of Ancient Rome",
-        clue4: "Incorporated into imagery of the Sept of Baelor in ‘Game of Thrones",
-        clue5: "Reconstructed in 1974 due to it resembling an actual ruin",
-        clue6: "Smaller replica located in Disney’s California Adventure in Anaheim, CA",
-        clue7: "Featured in film ‘Vertigo’",
-        clue8: "Located in Marina District",      
-        clue9: "94123",
-        clue10: "Most prominent building is an open rotunda"
-    }
+  targetInfo: {
+    targetName: "Palace of Fine Arts",
+    targetId: "4468f484f964a5204f331fe3",
+    targetLat: "37.8020",
+    targetLng: "-122.4486",
+    targetAccuracy: 0.025,
+    targetCategory: "Historic Sites",
+    targetLikes: "2171 Likes",
+    targetAddress: "3301 Lyon St San Francisco, CA 94123 United States",
+    targetCrossStreets: "btwn Bay & Jefferson St",
+    targetNeighborhood: "",
+    targetFactoid: "Originally built for the 1915 Panama-Pacific Exposition, the Palace of Fine Arts was preserved due to the efforts of Phoebe Apperson Hearst, mother of William Randolph Hearst.",
+    targetPhoto: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Palaceofarts.jpg",
+    targetGooglePlacesId: "",
+    targetRating: "",
+    targetVicinity: "",
+    targetTypes: [""],
+    targetURL: ""
+  },
+  clues: {
+    clue1: "Beaux-Arts architecture",
+    clue2: "Originally built in 1915 in order to exhibit works of art",
+    clue3: "Conceived to evoke a decaying ruin of Ancient Rome",
+    clue4: "Incorporated into imagery of the Sept of Baelor in ‘Game of Thrones",
+    clue5: "Reconstructed in 1974 due to it resembling an actual ruin",
+    clue6: "Smaller replica located in Disney’s California Adventure in Anaheim, CA",
+    clue7: "Featured in film ‘Vertigo’",
+    clue8: "Located in Marina District",
+    clue9: "94123",
+    clue10: "Most prominent building is an open rotunda"
+  }
 }
 
 const huntSeed4 = {
@@ -208,37 +211,37 @@ const huntSeed6 = {
 }
 
 const huntSeed7 = {
-    targetInfo: {
-        targetName: "War Memorial Opera House",
-        targetId: "49c7dcc3f964a520c9571fe3",
-        targetLat: "37.7785",
-        targetLng: "-122.4207",
-        targetAccuracy: 0.025,
-        targetCategory: "Opera Houses",
-        targetLikes: "528 Likes",
-        targetAddress: "301 Van Ness Ave San Francisco, CA 94102 United States",
-        targetCrossStreets: "at Grove St",
-        targetNeighborhood: "",
-        targetFactoid: "The original home of San Francisco Symphony, and current home of San Francisco Opera and Ballet, the War Memorial Opera House opened in 1932. It was also the location of the signing of the Treaty of San Francisco in 1951, declaring peace with Japan.",
-        targetPhoto: "https://www.taittowers.com/wp-content/uploads/2017/04/war-memorial-opera-house.jpg",
-        targetGooglePlacesId: "",
-        targetRating: "",
-        targetVicinity: "",
-        targetTypes: [""],
-        targetURL: ""
-    },
-    clues: {
-        clue1: "94102",
-        clue2: "Hayes Valley",
-        clue3: "Opened in 1932",
-        clue4: "Houses two arts companies",
-        clue5: "Was the historic groundbreaking site for an organizing assembly of famous worldwide organization",
-        clue6: "Houses both Opera and Ballet companies",
-        clue7: "Used to house Symphony as well",
-        clue8: "Rebuilt in 1993",      
-        clue9: "Near City Hall",
-        clue10: "Across the street from Davies Symphony Hall"
-    }
+  targetInfo: {
+    targetName: "War Memorial Opera House",
+    targetId: "49c7dcc3f964a520c9571fe3",
+    targetLat: "37.7785",
+    targetLng: "-122.4207",
+    targetAccuracy: 0.025,
+    targetCategory: "Opera Houses",
+    targetLikes: "528 Likes",
+    targetAddress: "301 Van Ness Ave San Francisco, CA 94102 United States",
+    targetCrossStreets: "at Grove St",
+    targetNeighborhood: "",
+    targetFactoid: "The original home of San Francisco Symphony, and current home of San Francisco Opera and Ballet, the War Memorial Opera House opened in 1932. It was also the location of the signing of the Treaty of San Francisco in 1951, declaring peace with Japan.",
+    targetPhoto: "https://www.taittowers.com/wp-content/uploads/2017/04/war-memorial-opera-house.jpg",
+    targetGooglePlacesId: "",
+    targetRating: "",
+    targetVicinity: "",
+    targetTypes: [""],
+    targetURL: ""
+  },
+  clues: {
+    clue1: "94102",
+    clue2: "Hayes Valley",
+    clue3: "Opened in 1932",
+    clue4: "Houses two arts companies",
+    clue5: "Was the historic groundbreaking site for an organizing assembly of famous worldwide organization",
+    clue6: "Houses both Opera and Ballet companies",
+    clue7: "Used to house Symphony as well",
+    clue8: "Rebuilt in 1993",
+    clue9: "Near City Hall",
+    clue10: "Across the street from Davies Symphony Hall"
+  }
 }
 
 const huntSeed8 = {
@@ -276,115 +279,115 @@ const huntSeed8 = {
 }
 
 const huntSeed9 = {
-    targetInfo: {
-        targetName: "Strawberry Hill",
-        targetId: "4c363d66ae2da59335d5fcc5",
-        targetLat: "37.7686",
-        targetLng: "-122.4753",
-        targetAccuracy: 0.025,
-        targetCategory: "Hills",
-        targetLikes: "98 Likes",
-        targetAddress: "Golden Gate Park San Francisco, CA United States",
-        targetCrossStreets: "",
-        targetNeighborhood: "",
-        targetFactoid: "The hill, occupying an entire island in a man-made lake, also contains Huntington Falls, a waterfall named after one of the Big Four railroad barons.",
-        targetPhoto: "https://goldengatepark.com/wp-content/uploads/2011/03/Waterfall-At-Stow-Lake-golden-gate-park.jpg",
-        targetGooglePlacesId: "",
-        targetRating: "",
-        targetVicinity: "",
-        targetTypes: [""],
-        targetURL: ""
-    },
-    clues: {
-        clue1: "94118",
-        clue2: "Sounds like a Beatles Song, but not quite...",
-        clue3: "Richmond District",
-        clue4: "Inside Park",
-        clue5: "Bridge Park",
-        clue6: "Contains 110-ft tall artificial waterfall",
-        clue7: "Also a pavilion presented by SF’s sister city, Taipei",
-        clue8: "West of Shakespeare Garden",      
-        clue9: "East of Golden Gate Park Polo Field",
-        clue10: "Fruit is in its name"
-    }
+  targetInfo: {
+    targetName: "Strawberry Hill",
+    targetId: "4c363d66ae2da59335d5fcc5",
+    targetLat: "37.7686",
+    targetLng: "-122.4753",
+    targetAccuracy: 0.025,
+    targetCategory: "Hills",
+    targetLikes: "98 Likes",
+    targetAddress: "Golden Gate Park San Francisco, CA United States",
+    targetCrossStreets: "",
+    targetNeighborhood: "",
+    targetFactoid: "The hill, occupying an entire island in a man-made lake, also contains Huntington Falls, a waterfall named after one of the Big Four railroad barons.",
+    targetPhoto: "https://goldengatepark.com/wp-content/uploads/2011/03/Waterfall-At-Stow-Lake-golden-gate-park.jpg",
+    targetGooglePlacesId: "",
+    targetRating: "",
+    targetVicinity: "",
+    targetTypes: [""],
+    targetURL: ""
+  },
+  clues: {
+    clue1: "94118",
+    clue2: "Sounds like a Beatles Song, but not quite...",
+    clue3: "Richmond District",
+    clue4: "Inside Park",
+    clue5: "Bridge Park",
+    clue6: "Contains 110-ft tall artificial waterfall",
+    clue7: "Also a pavilion presented by SF’s sister city, Taipei",
+    clue8: "West of Shakespeare Garden",
+    clue9: "East of Golden Gate Park Polo Field",
+    clue10: "Fruit is in its name"
+  }
 }
 
 const huntSeed10 = {
-    targetInfo: {
-        targetName: "Sutro Baths",
-        targetId: "4a05e6dbf964a52098721fe3",
-        targetLat: "37.7804",
-        targetLng: "-122.5137",
-        targetAccuracy: 0.025,
-        targetCategory: "Historic Sites",
-        targetLikes: "626 Likes",
-        targetAddress: "Point Lobos Ave. San Francisco, CA 94121 United States",
-        targetCrossStreets: "at Merrie Way",
-        targetNeighborhood: "",
-        targetFactoid: "Funded by self-made millionaire Adolph Sutro, the Sutro Baths were the largest indoor swimming pools in the world till the facility burned down in 1966.",
-        targetPhoto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sutro_Baths_interior%2C_circa_1896.jpg/340px-Sutro_Baths_interior%2C_circa_1896.jpg",
-        targetGooglePlacesId: "",
-        targetRating: "",
-        targetVicinity: "",
-        targetTypes: [""],
-        targetURL: ""
-    },
-    clues: {
-        clue1: "94121",
-        clue2: "Upper West Side of City",
-        clue3: "West of Legion of Honor",
-        clue4: "Outer Richmond",
-        clue5: "Built in 1896",
-        clue6: "World’s largest of its kind",
-        clue7: "Includes an ice skating rink",
-        clue8: "And 2700-seat amphitheater",      
-        clue9: "And a museum of stuffed and mounted animals, historic artifacts, and artwork",
-        clue10: "Baths"
-    }
+  targetInfo: {
+    targetName: "Sutro Baths",
+    targetId: "4a05e6dbf964a52098721fe3",
+    targetLat: "37.7804",
+    targetLng: "-122.5137",
+    targetAccuracy: 0.025,
+    targetCategory: "Historic Sites",
+    targetLikes: "626 Likes",
+    targetAddress: "Point Lobos Ave. San Francisco, CA 94121 United States",
+    targetCrossStreets: "at Merrie Way",
+    targetNeighborhood: "",
+    targetFactoid: "Funded by self-made millionaire Adolph Sutro, the Sutro Baths were the largest indoor swimming pools in the world till the facility burned down in 1966.",
+    targetPhoto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sutro_Baths_interior%2C_circa_1896.jpg/340px-Sutro_Baths_interior%2C_circa_1896.jpg",
+    targetGooglePlacesId: "",
+    targetRating: "",
+    targetVicinity: "",
+    targetTypes: [""],
+    targetURL: ""
+  },
+  clues: {
+    clue1: "94121",
+    clue2: "Upper West Side of City",
+    clue3: "West of Legion of Honor",
+    clue4: "Outer Richmond",
+    clue5: "Built in 1896",
+    clue6: "World’s largest of its kind",
+    clue7: "Includes an ice skating rink",
+    clue8: "And 2700-seat amphitheater",
+    clue9: "And a museum of stuffed and mounted animals, historic artifacts, and artwork",
+    clue10: "Baths"
+  }
 }
 
 const huntSeed11 = {
-    targetInfo: {
-        targetName: "Pier 39",
-        targetId: "409d7480f964a520f2f21ee3",
-        targetLat: "37.8087",
-        targetLng: "-122.4098",
-        targetAccuracy: 0.025,
-        targetCategory: "Piers",
-        targetLikes: "1756 Likes",
-        targetAddress: "2 Beach St San Francisco, CA 94133 United States",
-        targetCrossStreets: "the Embarcadero",
-        targetNeighborhood: "",
-        targetFactoid: "A popular tourist attraction, Pier 39 contains shops, restaurants, a video arcade, street performances, the Aquarium of the Bay, virtual 3D rides, and views of sea lions.",
-        targetPhoto: "https://www.californiabeaches.com/wp-content/uploads/2016/06/pier-39-fishermans-wharf-san-francisco-1-1000x518.jpg",
-        targetGooglePlacesId: "",
-        targetRating: "",
-        targetVicinity: "",
-        targetTypes: [""],
-        targetURL: ""
-    },
-    clues: {
-        clue1: "94133",
-        clue2: "Fisherman’s Wharf District",
-        clue3: "Sea Lions",
-        clue4: "First developed in 1978",
-        clue5: "Can see Angel Island",
-        clue6: "And Golden Gate Bridge",
-        clue7: "And Bay Bridge",
-        clue8: "Alcatraz is close",      
-        clue9: "Shopping Center",
-        clue10: "Aquarium of the Bay"
-    }
+  targetInfo: {
+    targetName: "Pier 39",
+    targetId: "409d7480f964a520f2f21ee3",
+    targetLat: "37.8087",
+    targetLng: "-122.4098",
+    targetAccuracy: 0.025,
+    targetCategory: "Piers",
+    targetLikes: "1756 Likes",
+    targetAddress: "2 Beach St San Francisco, CA 94133 United States",
+    targetCrossStreets: "the Embarcadero",
+    targetNeighborhood: "",
+    targetFactoid: "A popular tourist attraction, Pier 39 contains shops, restaurants, a video arcade, street performances, the Aquarium of the Bay, virtual 3D rides, and views of sea lions.",
+    targetPhoto: "https://www.californiabeaches.com/wp-content/uploads/2016/06/pier-39-fishermans-wharf-san-francisco-1-1000x518.jpg",
+    targetGooglePlacesId: "",
+    targetRating: "",
+    targetVicinity: "",
+    targetTypes: [""],
+    targetURL: ""
+  },
+  clues: {
+    clue1: "94133",
+    clue2: "Fisherman’s Wharf District",
+    clue3: "Sea Lions",
+    clue4: "First developed in 1978",
+    clue5: "Can see Angel Island",
+    clue6: "And Golden Gate Bridge",
+    clue7: "And Bay Bridge",
+    clue8: "Alcatraz is close",
+    clue9: "Shopping Center",
+    clue10: "Aquarium of the Bay"
+  }
 }
 
 Hunt.remove({})
-.then(() => Hunt.collection.insertMany([huntSeed1, huntSeed2, huntSeed3, huntSeed4, huntSeed5, huntSeed6, huntSeed7, huntSeed8, huntSeed9, huntSeed10, huntSeed11]))
-.then(data => {
-console.log(data.result.n + " records inserted!");
-process.exit(0);
-})
-.catch(err => {
-console.error(err);
-process.exit(1);
-}); 
+  .then(() => Hunt.collection.insertMany([huntSeed1, huntSeed2, huntSeed3, huntSeed4, huntSeed5, huntSeed6, huntSeed7, huntSeed8, huntSeed9, huntSeed10, huntSeed11]))
+  .then(data => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
 
