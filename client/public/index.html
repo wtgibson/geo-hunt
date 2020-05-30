@@ -1,52 +1,583 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<html>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<head>
+  <meta charset="utf-8">
+  <title>GeoHunt client</title>
+  <style>
+    #map,
+    #pano {
+      /* float: left; */
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <!-- <script src="bundle.js"></script>
+  <script>
+    require('dotenv').config()
+  </script> -->
+  <!-- <script type="text/javascript" src="target.json"></script> -->
+</head>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
-    <!-- <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPvvtVkeRawK_SaFf2Kb-MAUPjhV1GWNs&libraries=places"></script> -->
-  </body>
+<body>
+  <div class="modal fade" id="myModalIntro" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">GeoHunt (Prototype)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Welcome to GeoHunt, an online scavenger game.</p>
+
+          <p>Pegman needs to go to the destination, except his 'friends' only gave him hints. Help move "pegman" to the
+            target given the hints/clues available. Once you think he's there, click <span>Arrived (I think)</span>
+            button. Do it fast, as you are losing points EVERY second. The faster you get Pegman there, the more points
+            you keep. However, if you got it wrong (or not close enough) you get points taken away! </p>
+
+          <p>You can drag Pegman around the map, and both streetview and the map will follow. </p>
+
+          <p>NOTE: You MUST drag pegman himself. You must drop pegman onto one of the blue paths. If you don't, pegman
+            will go back into hiding in the lower-right corner of the map, and you have to drag and drop him onto the
+            map again.
+          </p>
+
+          <p>Ready to play? Please select length of your expedition (i.e. how many hunts, max = 5).</p>
+
+          <select id="expeditionLength" name="Length">
+            <option value="1">1</option>
+            <option selected value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <!-- <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option> -->
+          </select>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick=startExpedition()>Let's
+            Go!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalEndExpedition" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Expedition End</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Your GeoHunt expedition has ended.</p>
+
+          <p>Your total score is <span id="mytotalscore">0</span></p>
+
+          <p>over <span id="myexpeditionlength">0</span> hunts</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalinitGame" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Begin Hunt</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <p>Are you ready...</p>
+
+          <p>for hunt number <span id="mycurrenthunt">0</span>?</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick=initTick() data-dismiss="modal">Ready!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade modal-lg" id="myModalranOut" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Out of Time</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <p>Sorry, but you ran out of time.</p>
+
+          <p>Your score for this hunt is 0.</p>
+
+          <p>Your target was: <span id="yourtarget"></span></p>
+
+          <p><span id="targetphoto"></span></p>
+
+          <hr />
+
+          <p><b>Fun Trivia: </b><span id="myfactoid"></span></p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Too Bad...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade modal-lg" id="myModalfoundit" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Target Found!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <p>You found the target: <span id="yourtarget2"></span>!</p>
+
+          <p><span id="targetphoto2"></span></p>
+
+          <p>Your score for this hunt is <span id="mycurscore">0</span></p>
+
+          <hr />
+
+          <p><b>Fun Trivia: </b><span id="myfactoid2"></span></p>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onClick=endHunt(); data-dismiss="modal">All right!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalnotClose" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Not Close Enough</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <p>Sorry, but you are NOT close enough to the target!</p>
+
+          <p>You just suffered a <span id="mypenalty"></span> penalty.</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Argh!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-auto">
+        <h2>GeoHunt Prototype</h2>
+      </div>
+      <div class="col  align-self-center">
+        A virtual geographical hunt for targets around the city.
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="row" id="map"></div>
+        <div class="row" id="pano"></div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="curScore">Current Hunt Score: </label>
+          <input type="text" id="curScore" readonly size=3 />&nbsp;
+          <label for="totalScore">Expedition Score: </label>
+          <input type="text" id="totalScore" readonly size=3 />
+        </div>
+
+        <button type="button" class="btn btn-danger" onclick=isCloseEnough()>Arrived (I think)</button>
+
+        <button type="button" class="btn btn-info" onclick=calcDistance()>Distance</button>
+
+        <button type="button" class="btn btn-info" onclick=calcBearing()>Bearing</button>
+        <h3>Hints go here</h3>
+        <div id="hintshere">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const startScore = 1000;
+    const penalty = 100;
+    const persecond = 3;
+    const hintfrequency = 6 // per minute
+
+    const dataAll = [{
+      "id": 1,
+      "target": "Twin Peaks",
+      "accuracy": 0.025,
+      "clues": [
+        "aplaceholder1",
+        "aplaceholder2",
+        "aplaceholder3",
+        "aplaceholder4",
+        "aplaceholder5",
+        "aplaceholder6",
+        "aplaceholder7",
+        "aplaceholder8",
+        "aplaceholder9",
+        "aplaceholder10",
+        "aplaceholder11",
+        "aplaceholder12",
+        "aplaceholder13",
+        "aplaceholder14",
+        "aplaceholder15",
+        "aplaceholder16",
+        "aplaceholder17",
+        "aplaceholder18",
+        "aplaceholder19",
+        "aplaceholder20",
+        "aplaceholder21",
+        "aplaceholder22",
+        "aplaceholder23",
+        "aplaceholder24",
+        "aplaceholder25"
+      ],
+      "latlng": {
+        "lat": 37.7542,
+        "lng": -122.4471
+      },
+      "factoid": "Twin Peaks are NOT the tallest hills in San Francisco. At approximately 922 ft tall, they are actually a few feet shorter than Mt. Davidson at 928 ft. The northern peak is called Eureka, and the southern peak is called Noe. ",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/1/11/Twin_Peaks-San_Francisco.jpg"
+    },
+    {
+      "id": 2,
+      "target": "Chinatown Dragon Gate",
+      "accuracy": 0.01,
+      "clues": [
+        "bplaceholder1",
+        "bplaceholder2",
+        "bplaceholder3",
+        "bplaceholder4",
+        "bplaceholder5",
+        "bplaceholder6",
+        "bplaceholder7",
+        "bplaceholder8",
+        "bplaceholder9",
+        "bplaceholder10",
+        "bplaceholder11",
+        "bplaceholder12",
+        "bplaceholder13",
+        "bplaceholder14",
+        "bplaceholder15",
+        "bplaceholder16",
+        "bplaceholder17",
+        "bplaceholder18",
+        "bplaceholder19",
+        "bplaceholder20",
+        "bplaceholder21",
+        "bplaceholder22",
+        "bplaceholder23",
+        "bplaceholder24",
+        "bplaceholder25"
+      ],
+      "latlng": {
+        "lat": 37.7907,
+        "lng": -122.4056
+      },
+      "factoid": "While the plan for a gate started in 1953, it wasn't until 1970 that the gate was finished and dedicated. Two Chinese guardian lions (one male, one female) statues sat at either side. ",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/1_chinatown_san_francisco_arch_gateway.JPG/1920px-1_chinatown_san_francisco_arch_gateway.JPG"
+    },
+    ]
+
+    var totalScore = 0
+    var curScore = startScore
+    var scoreInterval, hintInterval, data
+
+    var curhunt = 0;
+    var curhint = 0;
+    var expedition = [1, 2];
+    var huntaccuracy
+
+    // console.log(process.env.GAPIKey)
+    // const twinPeaks = {
+    //   lat: 37.7542,
+    //   lng: -122.4471
+    // };
+
+    // var huntTarget = JSON.parse(target)
+    // console.log(huntTarget)
+
+    // var huntTarget = twinPeaks;
+
+
+    function perTick() {
+      curScore -= persecond;
+      $("#curScore").val(curScore);
+      if (curScore <= 0) {
+        ranOutofTime();
+      }
+    }
+
+    function initHint() {
+      //pre-display X hints where x=2 
+      $("#hintshere").html(
+        "<p>" + data.clues[0] + "</p>" +
+        "<p>" + data.clues[1] + "</p>");
+      curhint = 2
+    }
+
+    function perHint() {
+      // just display a hint, watch out so we don't run out of hints, as 0-24 is all we got
+      var existinghint = $("#hintshere").html()
+      if (curhint < 24) {
+        $("#hintshere").html(existinghint + "<p>" + data.clues[curhint] + "</p>");
+        curhint++;
+      }
+    }
+
+    function startExpedition() {
+      // curhunt=0
+      totalScore = 0
+      $("#totalScore").val(totalScore)
+      // while (curhunt < expedition.length) {
+      initGame();
+      // }
+    }
+
+    function endExpedition() {
+      // alert("That's it! Your total score is " + totalScore + " over " + expedition.length + " hunts")
+      let el = expedition.length
+      $('#mytotalscore').html(totalScore.toString())
+      $('#myexpeditionlength').html(el.toString())
+      $('#myModalEndExpedition').modal('show');
+    }
+
+    function initGame() {
+      // console.log("curhunt = ", curhunt)
+      // console.log("expedition length = " + expedition.length.toString())
+
+      curScore = 1000;
+      $("#curScore").val(curScore)
+      // test data, it's supposed to be read from the server
+      data = dataAll[curhunt]
+      // console.log(data)
+      huntTarget = data.latlng;
+      huntaccuracy = data.accuracy;
+      curhint = 0;
+      console.log(data)
+      //reset hint area
+      $("#hintshere").html("")
+      let t = curhunt + 1
+      $('#mycurrenthunt').html(t.toString())
+
+      $('#myModalinitGame').modal('show')
+      // alert("Get ready for... Hunt number " + (curhunt + 1) + "!!!!!!")
+
+      // initTick();
+    }
+
+    function endHunt() {
+      //transfer current score to total score
+      totalScore += curScore
+      //update display
+      $("#totalScore").val(totalScore)
+      // increment clue
+      curhunt++;
+      if (curhunt >= expedition.length) {
+        // end of the line!
+        endExpedition();
+      } else initGame(); // next round/hunt!
+    }
+
+    function initTick() {
+      console.log('Starting ticks')
+      initHint();
+      scoreInterval = setInterval(perTick, 1000)
+      hintInterval = setInterval(perHint, 60 / hintfrequency * 1000)
+    }
+
+    function clearTick() {
+      console.log('Stopped ticks')
+      clearInterval(scoreInterval)
+      clearInterval(hintInterval)
+    }
+
+    function ranOutofTime() {
+      clearTick();
+      // alert("Sorry, you ran out of time. Your hunt score is ZERO. ")
+      $('#yourtarget').html(data.target)
+      $('#myfactoid').html(data.factoid)
+      $('#targetphoto').html("<img src='" + data.photo + "' width='400px'>")
+      $('#myModalranOut').modal('show')
+      endHunt();
+    }
+
+    function isCloseEnough() {
+      console.log("Close enough?")
+      if (haversine_distance(curCenter, huntTarget) < huntaccuracy) {
+        //you found it!!!!!  stop the clock
+        clearTick();
+        // alert("YOU FOUND IT! Your hunt score is " + curScore)
+        // totalScore += curScore
+        $('#yourtarget2').html(data.target)
+        $('#targetphoto2').html("<img src='" + data.photo + "' width='400px'>")
+        $('#mycurscore').html(curScore.toString())
+        $('#myfactoid2').html(data.factoid)
+        $('#myModalfoundit').modal('show')
+        // alert(data.factoid)
+        console.log("Yes!")
+        // endHunt();
+      } else {
+        // wah wah wah...
+        // alert("Sorry, you're not close enough!")
+        $('#myModalnotClose').modal('show')
+        console.log("Nope!")
+        curScore -= penalty
+        if (curScore < 0) {
+          ranOutofTime();
+        }
+      }
+    }
+
+    function calcBearing() {
+
+      start_latitude = curCenter.lat
+      start_longitude = curCenter.lng
+      stop_latitude = huntTarget.lat
+      stop_longitude = huntTarget.lng
+
+      var y = Math.sin(stop_longitude - start_longitude) * Math.cos(stop_latitude);
+      var x = Math.cos(start_latitude) * Math.sin(stop_latitude) -
+        Math.sin(start_latitude) * Math.cos(stop_latitude) * Math.cos(stop_longitude - start_longitude);
+      var brng = Math.atan2(y, x) * 180 / Math.PI;
+      // return brng
+      if (brng < 0) {
+        brng += 360
+      }
+      console.log(brng)
+
+      dir = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"]
+      brng2 = (brng - 22.5) / 45
+
+      // alert("Brng2 = " + brng2 + " / " + dir[Math.ceil(brng2)])
+      alert("Your target is to the " + dir[Math.ceil(brng2)])
+    }
+
+    function haversine_distance(mk1, mk2) {
+      var R = 3958.8; // Radius of the Earth in miles
+      var rlat1 = mk1.lat * (Math.PI / 180); // Convert degrees to radians
+      var rlat2 = mk2.lat * (Math.PI / 180); // Convert degrees to radians
+      var difflat = rlat2 - rlat1; // Radian difference (latitudes)
+      var difflon = (mk2.lng - mk1.lng) * (Math.PI / 180); // Radian difference (longitudes)
+
+      var d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
+      return d;
+    }
+
+    const sf = { lat: 37.7749, lng: -122.4194 };
+    var curCenter = sf
+
+    function calcDistance() {
+      // const p1 = LatLon.parse(curCenter.lat + "," + curCenter.lng)
+      // const p2 = LatLon.parse(twinPeaks.lat + "," + twinPeaks.lng)
+      // console.log(curCenter)
+      var dist = haversine_distance(curCenter, huntTarget)
+      console.log(dist)
+      let dist2 = dist.toPrecision(1);
+      alert("Dist = " + dist2)
+    }
+
+    function initialize() {
+      // var mapOptions = { disableDefaultUI: true}
+      // var sf = { lat: 37.7749, lng: -122.4194 };
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: sf,
+        zoom: 16,
+        panControl: false,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: true,
+        overviewMapControl: false,
+        rotateControl: false,
+        scrollWheel: true,
+      });
+      map.addListener('position_changed', function () {
+        panorama.setPosition(map.getCenter());
+      })
+      var panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('pano'), {
+        position: sf,
+        pov: {
+          heading: 0,
+          pitch: 0
+        }
+      });
+      map.setStreetView(panorama);
+      panorama.addListener('position_changed', function () {
+        map.setCenter(panorama.getPosition());
+        curCenter = map.getCenter().toJSON();
+      });
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUFRV2Qv6kYtvjmASK8HOve2VBWRAc9N8&callback=initialize"> </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script>
+    $(window).on('load', function () {
+      //display the "intro" modal
+      $('#myModalIntro').modal('show');
+
+    });
+  </script>
+</body>
+
 </html>
