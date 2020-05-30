@@ -303,84 +303,6 @@
 
     console.log(dataAll)
 
-    // const dataAll = [{
-    //   "id": 1,
-    //   "target": "Twin Peaks",
-    //   "accuracy": 0.025,
-    //   "clues": [
-    //     "aplaceholder1",
-    //     "aplaceholder2",
-    //     "aplaceholder3",
-    //     "aplaceholder4",
-    //     "aplaceholder5",
-    //     "aplaceholder6",
-    //     "aplaceholder7",
-    //     "aplaceholder8",
-    //     "aplaceholder9",
-    //     "aplaceholder10",
-    //     "aplaceholder11",
-    //     "aplaceholder12",
-    //     "aplaceholder13",
-    //     "aplaceholder14",
-    //     "aplaceholder15",
-    //     "aplaceholder16",
-    //     "aplaceholder17",
-    //     "aplaceholder18",
-    //     "aplaceholder19",
-    //     "aplaceholder20",
-    //     "aplaceholder21",
-    //     "aplaceholder22",
-    //     "aplaceholder23",
-    //     "aplaceholder24",
-    //     "aplaceholder25"
-    //   ],
-    //   "latlng": {
-    //     "lat": 37.7542,
-    //     "lng": -122.4471
-    //   },
-    //   "factoid": "Twin Peaks are NOT the tallest hills in San Francisco. At approximately 922 ft tall, they are actually a few feet shorter than Mt. Davidson at 928 ft. The northern peak is called Eureka, and the southern peak is called Noe. ",
-    //   "photo": "https://upload.wikimedia.org/wikipedia/commons/1/11/Twin_Peaks-San_Francisco.jpg"
-    // },
-    // {
-    //   "id": 2,
-    //   "target": "Chinatown Dragon Gate",
-    //   "accuracy": 0.01,
-    //   "clues": [
-    //     "bplaceholder1",
-    //     "bplaceholder2",
-    //     "bplaceholder3",
-    //     "bplaceholder4",
-    //     "bplaceholder5",
-    //     "bplaceholder6",
-    //     "bplaceholder7",
-    //     "bplaceholder8",
-    //     "bplaceholder9",
-    //     "bplaceholder10",
-    //     "bplaceholder11",
-    //     "bplaceholder12",
-    //     "bplaceholder13",
-    //     "bplaceholder14",
-    //     "bplaceholder15",
-    //     "bplaceholder16",
-    //     "bplaceholder17",
-    //     "bplaceholder18",
-    //     "bplaceholder19",
-    //     "bplaceholder20",
-    //     "bplaceholder21",
-    //     "bplaceholder22",
-    //     "bplaceholder23",
-    //     "bplaceholder24",
-    //     "bplaceholder25"
-    //   ],
-    //   "latlng": {
-    //     "lat": 37.7907,
-    //     "lng": -122.4056
-    //   },
-    //   "factoid": "While the plan for a gate started in 1953, it wasn't until 1970 that the gate was finished and dedicated. Two Chinese guardian lions (one male, one female) statues sat at either side. ",
-    //   "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/1_chinatown_san_francisco_arch_gateway.JPG/1920px-1_chinatown_san_francisco_arch_gateway.JPG"
-    // },
-    // ]
-
     var totalScore = 0
     var curScore = startScore
     var scoreInterval, hintInterval, data
@@ -389,17 +311,6 @@
     var curhint = 0;
     var expedition = [1, 2];
     var huntaccuracy
-
-    // console.log(process.env.GAPIKey)
-    // const twinPeaks = {
-    //   lat: 37.7542,
-    //   lng: -122.4471
-    // };
-
-    // var huntTarget = JSON.parse(target)
-    // console.log(huntTarget)
-
-    // var huntTarget = twinPeaks;
 
     function noConsonants(testString) {
       let characterArray = testString.split("")
