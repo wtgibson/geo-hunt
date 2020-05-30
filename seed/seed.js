@@ -32,7 +32,7 @@ const huntSeed1 = {
         clue3: "Think of a TV Show by David Lynch",
         clue4: "Contains a point named after a holiday decoration",
         clue5: "Incredible view of most of the city",
-        clue6: "94114",
+        clue6: "The target zip code is 94114",
         clue7: "San Francisco Police Department Academy is nearby",
         clue8: "Elevation: 925 ft",      
         clue9: "Eureka and Noe",
@@ -103,7 +103,7 @@ const huntSeed3 = {
     clue6: "Smaller replica located in Disney’s California Adventure in Anaheim, CA",
     clue7: "Featured in film ‘Vertigo’",
     clue8: "Located in Marina District",
-    clue9: "94123",
+    clue9: "The target zip code is 94123",
     clue10: "Most prominent building is an open rotunda"
   }
 }
@@ -129,7 +129,7 @@ const huntSeed4 = {
         targetURL: ""
     },
     clues: {
-        clue1: "94105",
+        clue1: "The target zip code is 94105",
         clue2: "Tallest building in San Francisco",
         clue3: "Located in Financial District",
         clue4: "Does tours of specific floors roughly once a month",
@@ -164,11 +164,11 @@ const huntSeed5 = {
     },
     clues: {
         clue1: "Near Golden Gate Bridge",
-        clue2: "94121",
-        clue3: "Sea Cliff",
+        clue2: "The target zip code is 94121",
+        clue3: "In Sea Cliff neighborhood",
         clue4: "Near Golf Course",
         clue5: "By the sea",
-        clue6: "Lincoln Park",
+        clue6: "In Lincoln Park",
         clue7: "Northeast of SF VA Medical Center",
         clue8: "Formerly owned by wife of sugar magnate",      
         clue9: "Constructed for 1915 Panama-Pacific International Exposition",
@@ -197,7 +197,7 @@ const huntSeed6 = {
         targetURL: ""
     },
     clues: {
-        clue1: "94105",
+        clue1: "The target zip code is 94105",
         clue2: "Largest of its kind in Western United States when first built",
         clue3: "Built in 1875",
         clue4: "Woodrow Wilson hosted luncheon in 1919",
@@ -231,8 +231,8 @@ const huntSeed7 = {
     targetURL: ""
   },
   clues: {
-    clue1: "94102",
-    clue2: "Hayes Valley",
+    clue1: "The target zip code is 94102",
+    clue2: "In Hayes Valley",
     clue3: "Opened in 1932",
     clue4: "Houses two arts companies",
     clue5: "Was the historic groundbreaking site for an organizing assembly of famous worldwide organization",
@@ -265,9 +265,9 @@ const huntSeed8 = {
         targetURL: ""
     },
     clues: {
-        clue1: "94133",
+        clue1: "The target zip code is 94133",
         clue2: "Bounded by three different streets",
-        clue3: "8 floors",
+        clue3: "It has 8 floors",
         clue4: "Copper outside",
         clue5: "Cafe Niebaum-Coppola",
         clue6: "Now Cafe Zoetrope",
@@ -299,7 +299,7 @@ const huntSeed9 = {
     targetURL: ""
   },
   clues: {
-    clue1: "94118",
+    clue1: "The target zip code is 94118",
     clue2: "Sounds like a Beatles Song, but not quite...",
     clue3: "Richmond District",
     clue4: "Inside Park",
@@ -333,10 +333,10 @@ const huntSeed10 = {
     targetURL: ""
   },
   clues: {
-    clue1: "94121",
+    clue1: "The target zip code is 94121",
     clue2: "Upper West Side of City",
     clue3: "West of Legion of Honor",
-    clue4: "Outer Richmond",
+    clue4: "Located in Outer Richmond",
     clue5: "Built in 1896",
     clue6: "World’s largest of its kind",
     clue7: "Includes an ice skating rink",
@@ -367,9 +367,9 @@ const huntSeed11 = {
     targetURL: ""
   },
   clues: {
-    clue1: "94133",
+    clue1: "The target zip code is 94133",
     clue2: "Fisherman’s Wharf District",
-    clue3: "Sea Lions",
+    clue3: "Sea Lions populate the area",
     clue4: "First developed in 1978",
     clue5: "Can see Angel Island",
     clue6: "And Golden Gate Bridge",
