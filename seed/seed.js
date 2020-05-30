@@ -24,10 +24,10 @@ const huntSeed1 = {
         targetURL: ""
     },
     clues: {
-        clue1: "Contains a point named after a holiday decoration",
+        clue1: "It’s very high up",
         clue2: "Santa Ana Mountain is just visible from here",
         clue3: "Think of a TV Show by David Lynch",
-        clue4: "It’s very high up",
+        clue4: "Contains a point named after a holiday decoration",
         clue5: "Incredible view of most of the city",
         clue6: "94114",
         clue7: "San Francisco Police Department Academy is nearby",
@@ -58,13 +58,13 @@ const huntSeed2 = {
         targetURL: ""
     },
     clues: {
-        clue1: "Art Deco Design",
+        clue1: "It requires a toll",
         clue2: "Made of Steel",
         clue3: "Opened in 1937",
         clue4: "Spans both San Francisco and Marin counties",
         clue5: "Was the largest of its kind at the time of opening",
         clue6: "Initially designed by Joseph Strauss",
-        clue7: "It requires a toll",
+        clue7: "Art Deco Design",
         clue8: "San Francisco Icon",      
         clue9: "One of the Wonders of the Modern World according to the American Society of Civil Engineers",
         clue10: "You’ll find it on virtually anything referencing the city"
@@ -127,14 +127,14 @@ const huntSeed4 = {
     },
     clues: {
         clue1: "94105",
-        clue2: "Skyscraper",
+        clue2: "Tallest building in San Francisco",
         clue3: "Located in Financial District",
         clue4: "Does tours of specific floors roughly once a month",
         clue5: "Features an art installation at the top",
         clue6: "Usually only one artist contributes",
         clue7: "Has been sinking and slanting like the Leaning Tower of Piza",
         clue8: "Eye of Sauron Halloween 2018",      
-        clue9: "Tallest building in San Francisco",
+        clue9: "Formerly known as Transbay Tower",
         clue10: "Has Salesforce as a tenent"
     }
 }
@@ -169,7 +169,7 @@ const huntSeed5 = {
         clue7: "Northeast of SF VA Medical Center",
         clue8: "Formerly owned by wife of sugar magnate",      
         clue9: "Constructed for 1915 Panama-Pacific International Exposition",
-        clue10: "Museum"
+        clue10: "Occupies an elevated site in Lincoln Park"
     }
 }
 
@@ -203,7 +203,7 @@ const huntSeed6 = {
         clue7: "Garden Court is one of San Francisco’s most prestigious dining rooms",
         clue8: "Near Union Square",      
         clue9: "Building sold to Sheraton in 1954",
-        clue10: "Hotel"
+        clue10: "Member of the Historic Hotels of America"
     }
 }
 
@@ -263,7 +263,7 @@ const huntSeed8 = {
     },
     clues: {
         clue1: "94133",
-        clue2: "Building",
+        clue2: "Bounded by three different streets",
         clue3: "8 floors",
         clue4: "Copper outside",
         clue5: "Cafe Niebaum-Coppola",
