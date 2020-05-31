@@ -56,22 +56,27 @@
           <p>Drag and drop pegman around the city, based on the hints you are given at the rate of <span
               id="hintsperminute"></span> hints per minute.</p>
 
-
-
           <p>You may zoom in/out as necessary. Drop pegman as close to the target as possible. It will be marked on
             Google as point-of-interest. </p>
 
-          <p>If pegman is not on the map, he's hiding in the lower-right hand corner of the map. </p>
+          <p>If pegman is not on the map, he's hiding in the lower-right hand corner of the map. Just drag him out and
+            drop him on the map again.</p>
 
           <p>Do it quickly, as you start with <span id="startwith"></span> points but loses <span
               id="pointspersecond"></span> points
             every second!</p>
 
+          <p>The two buttons <b>Bearing</b> and <b>Distance</b> can be used to give you extra hint about the
+            target at the cost of <span id="minorpenalty"></span> points per use. </p>
+
           <p>Once you arrive at the location, click the red <b>Arrived (I think)</b> button and confirm. However, if you
             are NOT close enough to the target, you will be charged a <span id="majorpenalty"></span> point penalty!</p>
 
-          <p>The two buttons <b>Bearing</b> and <b>Distance</b> can be used to give you extra hint about the
-            target at the cost of <span id="minorpenalty"></span> per click. </p>
+          <p>If you have indeed arrived, your remaining points will be saved, and you will go on to another hunt until
+            your expedition ends. </p>
+
+          <p>If you think you have arrived, but it is not registering, please zoom in, drag Pegman closer, and try
+            again. Generally, you need to be within 0.025 km (25 meters) to be considered "arrived". </p>
 
         </div>
         <div class="modal-footer justify-content-center">
@@ -84,12 +89,12 @@
 
   <div class="modal fade" id="myModalIntro" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">GeoHunt V0.8.0</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span> -->
           </button>
         </div>
         <div class="modal-body">
@@ -673,7 +678,7 @@
         console.log("Yes!")
         // endHunt();
       } else {
-        $('#mypenalty').html(mypenalty.toString())
+        $('#mypenalty').html(penalty.toString())
         // wah wah wah...
         // alert("Sorry, you're not close enough!")
         $('#myModalnotClose').modal('show')
@@ -686,6 +691,7 @@
     }
 
     function calcBearing() {
+      const dir = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest", "north"]
 
       start_latitude = curCenter.lat
       start_longitude = curCenter.lng
@@ -700,9 +706,8 @@
       if (brng < 0) {
         brng += 360
       }
-      console.log(brng)
+      console.log(brng) // true bearing
 
-      dir = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"]
       brng2 = (brng - 22.5) / 45
 
       // alert("Brng2 = " + brng2 + " / " + dir[Math.ceil(brng2)])
