@@ -7,7 +7,7 @@
   <style>
     #map,
     #pano {
-      height: 500px;
+      height: 450px;
       width: 100%;
     }
   </style>
@@ -115,9 +115,9 @@
     </div>
   </div>
 
-  <div class="modal fade modal-lg" id="myModalranOut" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="myModalranOut" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Out of Time</h5>
@@ -141,21 +141,21 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Too Bad...</button>
+          <button type="button" class="btn btn-danger" onClick=endHunt() data-dismiss="modal">Too Bad...</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade modal-lg" id="myModalfoundit" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="myModalfoundit" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Target Found!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+          </button> -->
         </div>
         <div class="modal-body">
 
@@ -184,15 +184,15 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Not Close Enough</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+          </button> -->
         </div>
         <div class="modal-body">
 
           <p>Sorry, but you are NOT close enough to the target!</p>
 
-          <p>You just suffered a <span id="mypenalty"></span> penalty.</p>
+          <p>You just suffered a <span id="mypenalty"></span> points penalty.</p>
 
         </div>
         <div class="modal-footer">
@@ -202,11 +202,57 @@
     </div>
   </div>
 
+  <div class="modal fade" id="myModalBearing1" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Bearing Hint</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
 
+          <p>Please confirm that you want a bearing hint? </p>
+
+          <p>You will suffer a <span id="mypenalty2"></span> points penalty if you choose to get the hint.</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onClick=getBearing2() data-dismiss="modal">Get Hint</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Never mind!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalBearing2" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Bearing Hint</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <p><span id="bearinghint"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- main program -->
   <div class="container-fluid">
     <div class="row">
       <div class="col-auto">
-        <h2>GeoHunt Prototype</h2>
+        <h2>GeoHunt (V0.8.0)</h2>
       </div>
       <div class="col  align-self-center">
         A virtual geographical hunt for targets around the city.
@@ -214,7 +260,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" height=100%>
       <div class="col">
         <div class="row" id="map"></div>
         <div class="row" id="pano"></div>
@@ -231,8 +277,8 @@
 
         <button type="button" class="btn btn-info" onclick=calcDistance()>Distance</button>
 
-        <button type="button" class="btn btn-info" onclick=calcBearing()>Bearing</button>
-        <h3>Hints go here</h3>
+        <button type="button" class="btn btn-info" onclick=getBearing1()>Bearing</button>
+        <h3>Hints</h3>
         <div id="hintshere">
 
         </div>
@@ -242,9 +288,11 @@
 
   <script>
     const startScore = 1000;
+    const maxhint = 14;
     const penalty = 100;
-    const persecond = 3;
-    const hintfrequency = 6 // per minute
+    const penalty2 = 25;
+    const persecond = 4;
+    const hintfrequency = 4 // per minute
     var items = [];
     var data = [];
 
@@ -341,7 +389,7 @@
     function perHint() {
       // just display a hint, watch out so we don't run out of hints, as 0-24 is all we got
       var existinghint = $("#hintshere").html()
-      if (curhint < 24) {
+      if (curhint < maxhint) {
         $("#hintshere").html(existinghint + "<p>" + data.clues[curhint] + "</p>");
         curhint++;
       }
@@ -368,7 +416,7 @@
       // console.log("curhunt = ", curhunt)
       // console.log("expedition length = " + expedition.length.toString())
 
-      curScore = 1000;
+      curScore = startScore;
       $("#curScore").val(curScore)
       // test data, it's supposed to be read from the server
       data = dataAll[curhunt]
@@ -421,7 +469,7 @@
       $('#myfactoid').html(data.factoid)
       $('#targetphoto').html("<img src='" + data.photo + "' width='400px'>")
       $('#myModalranOut').modal('show')
-      endHunt();
+      // endHunt();
     }
 
     function isCloseEnough() {
@@ -440,6 +488,7 @@
         console.log("Yes!")
         // endHunt();
       } else {
+        $('#mypenalty').html(mypenalty.toString())
         // wah wah wah...
         // alert("Sorry, you're not close enough!")
         $('#myModalnotClose').modal('show')
@@ -472,7 +521,20 @@
       brng2 = (brng - 22.5) / 45
 
       // alert("Brng2 = " + brng2 + " / " + dir[Math.ceil(brng2)])
-      alert("Your target is to the " + dir[Math.ceil(brng2)])
+      return dir[Math.ceil(brng2)]
+    }
+
+    function getBearing1() {
+      $("#mypenalty2").html(mypenalty2.toString())
+      $('#myModalBearing1').modal('show')
+    }
+
+    function getBearing2() {
+      curScore -= penalty2
+      if (curScore < 0) {
+        ranOutofTime();
+      }
+      $("#bearinghint").html("Your target is to the " + calcBearing())
     }
 
     function haversine_distance(mk1, mk2) {
