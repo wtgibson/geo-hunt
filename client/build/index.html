@@ -87,7 +87,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close </button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick=startIntro()>Play Again</button>
         </div>
       </div>
     </div>
@@ -319,6 +319,26 @@
     </div>
   </div>
 
+  <div class="modal fade" id="myModalFatalError" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">FATAL ERROR</h5>
+        </div>
+        <div class="modal-body">
+          <p>Unable to read from clue server. </p>
+
+          <p>Please hit REFRESH in your browser to try again.</p>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- main program -->
   <div class="container-fluid">
     <div class="row">
@@ -368,67 +388,16 @@
     var data = [];
 
     //hardcoded to 2 at this point. Will replace with number later. 
-    $.ajax({
-      type: 'GET',
-      url: "http://localhost:3001/api/createexpedition/2",
-      // dataType: 'json',
-      // data: data,
-      async: false
-    }).done(function (datareq) {
-      console.log(datareq)
-      data = datareq
-    })
-      .fail(function () {
-        console.log("Failed to retrieve expedition from server")
-      })
 
-    //data now contains 2 objects  (0, 1) each in the specific format
-
-    //which we shall convert into "dataAll" one at a time with dataSingle
-    var dataAll = [];
-
-    data.forEach(d => {
-      // console.log(d)
-      var dataSingle = {}
-      var dataClues = []
-      dataSingle.id = d.targetInfo.targetId
-      dataSingle.target = d.targetInfo.targetName
-      dataSingle.accuracy = d.targetInfo.targetAccuracy
-      dataSingle.latlng = { lat: d.targetInfo.targetLat, lng: d.targetInfo.targetLng }
-      dataSingle.factoid = d.targetInfo.targetFactoid
-      dataSingle.photo = d.targetInfo.targetPhoto
-      dataClues.push("The target category is '" + d.targetInfo.targetCategory + "'")
-      dataClues.push(d.clues.clue1)
-      dataClues.push("Target hint is '" + noConsonants(d.targetInfo.targetName) + "'")
-      dataClues.push(d.clues.clue2)
-      if (d.targetInfo.targetCrossStreets !== "") {
-        dataClues.push("Target cross-street is '" + d.targetInfo.targetCrossStreets + "'")
-      } else {
-        dataClues.push("Target does NOT have a cross-street.")
-      }
-      dataClues.push(d.clues.clue3)
-      dataClues.push("First letter in target name is " + d.targetInfo.targetName[0])
-      dataClues.push(d.clues.clue4)
-      dataClues.push(d.clues.clue5)
-      dataClues.push(d.clues.clue6)
-      dataClues.push(d.clues.clue7)
-      dataClues.push(d.clues.clue8)
-      dataClues.push(d.clues.clue9)
-      dataClues.push(d.clues.clue10)
-      dataSingle.clues = dataClues
-      // console.log(dataSingle)
-      dataAll.push(dataSingle)
-    })
-
-    console.log(dataAll)
-
+    //    console.log(dataAll)
+    var dataAll = []
     var totalScore = 0
     var curScore = startScore
     var scoreInterval, hintInterval, data
 
     var curhunt = 0;
     var curhint = 0;
-    var expedition = [1, 2];
+    var expedition = [];
     var huntaccuracy
 
     function noConsonants(testString) {
@@ -467,10 +436,77 @@
       }
     }
 
+    function startIntro() {
+      $('#myModalIntro').modal('show');
+    }
+
     function startExpedition() {
       // curhunt=0
       totalScore = 0
       $("#totalScore").val(totalScore)
+
+      // init clues and stuff
+
+
+      //first, get expeditionlength from modal
+      let expLen = $("#expeditionLength").val()
+
+
+
+      $.ajax({
+        type: 'GET',
+        url: "http://localhost:3001/api/createexpedition/" + expLen.toString(),
+        // dataType: 'json',
+        // data: data,
+        async: false
+      }).done(function (datareq) {
+        console.log(datareq)
+        data = datareq
+      })
+        .fail(function () {
+          $('#myModalFatalError').modal('show');
+        })
+
+      //which we shall convert into "dataAll" one at a time with dataSingle
+      dataAll = [];
+
+      data.forEach(d => {
+        expedition.push(d.targetInfo.targetId)
+        // console.log(d)
+        var dataSingle = {}
+        var dataClues = []
+        dataSingle.id = d.targetInfo.targetId
+        dataSingle.target = d.targetInfo.targetName
+        dataSingle.accuracy = d.targetInfo.targetAccuracy
+        dataSingle.latlng = { lat: d.targetInfo.targetLat, lng: d.targetInfo.targetLng }
+        dataSingle.factoid = d.targetInfo.targetFactoid
+        dataSingle.photo = d.targetInfo.targetPhoto
+        dataClues.push("The target category is '" + d.targetInfo.targetCategory + "'")
+        dataClues.push(d.clues.clue1)
+        dataClues.push("Target hint is '" + noConsonants(d.targetInfo.targetName) + "'")
+        dataClues.push(d.clues.clue2)
+        if (d.targetInfo.targetCrossStreets !== "") {
+          dataClues.push("Target cross-street is '" + d.targetInfo.targetCrossStreets + "'")
+        } else {
+          dataClues.push("Target does NOT have a cross-street.")
+        }
+        dataClues.push(d.clues.clue3)
+        dataClues.push("First letter in target name is " + d.targetInfo.targetName[0])
+        dataClues.push(d.clues.clue4)
+        dataClues.push(d.clues.clue5)
+        dataClues.push(d.clues.clue6)
+        dataClues.push(d.clues.clue7)
+        dataClues.push(d.clues.clue8)
+        dataClues.push(d.clues.clue9)
+        dataClues.push(d.clues.clue10)
+        dataSingle.clues = dataClues
+        // console.log(dataSingle)
+        dataAll.push(dataSingle)
+
+        console.log(dataAll)
+
+      })
+
       // while (curhunt < expedition.length) {
       initGame();
       // }
@@ -698,11 +734,7 @@
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
   <script>
-    $(window).on('load', function () {
-      //display the "intro" modal
-      $('#myModalIntro').modal('show');
-
-    });
+    $(window).on('load', startIntro());
   </script>
 </body>
 
