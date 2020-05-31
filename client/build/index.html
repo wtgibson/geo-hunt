@@ -7,7 +7,7 @@
   <style>
     #map,
     #pano {
-      height: 420px;
+      height: 425px;
       width: 100%;
     }
   </style>
@@ -247,6 +247,52 @@
     </div>
   </div>
 
+  <div class="modal fade" id="myModalDistance1" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Distance Hint</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+
+          <p>Please confirm that you want a distance hint? </p>
+
+          <p>You will suffer a <span id="mypenalty3"></span> points penalty if you choose to get the hint.</p>
+
+          <p>You will be given a distance to 1 decimal place, EX: "Your target is 1.6 kilometers away."</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onClick=getDistance2() data-dismiss="modal">Get Hint</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Never mind!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalDistance2" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Distance Hint</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <p><span id="distancehint"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- main program -->
   <div class="container-fluid">
@@ -275,7 +321,7 @@
 
         <button type="button" class="btn btn-danger" onclick=isCloseEnough()>Arrived (I think)</button>
 
-        <button type="button" class="btn btn-info" onclick=calcDistance()>Distance</button>
+        <button type="button" class="btn btn-info" onclick=getDistance1()>Distance</button>
 
         <button type="button" class="btn btn-info" onclick=getBearing1()>Bearing</button>
         <h3>Hints</h3>
@@ -559,8 +605,24 @@
       var dist = haversine_distance(curCenter, huntTarget)
       console.log(dist)
       let dist2 = dist.toPrecision(1);
-      alert("Dist = " + dist2)
+      return dist2.toString()
+      // alert("Dist = " + dist2)
     }
+
+    function getDistance1() {
+      $("#mypenalty3").html(penalty2.toString())
+      $('#myModalDistance1').modal('show')
+    }
+
+    function getDistance2() {
+      curScore -= penalty2
+      if (curScore < 0) {
+        ranOutofTime();
+      }
+      $("#distancehint").html("Your target is " + calcDistance() + "kilometers away. You need to be less than " + huntaccuracy.toString() + " kilometers away")
+      $('#myModalDistance2').modal('show')
+    }
+
 
     function initialize() {
       // var mapOptions = { disableDefaultUI: true}
