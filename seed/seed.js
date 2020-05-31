@@ -19,7 +19,7 @@ const huntSeed1 = {
         targetCrossStreets: "at Twin Peaks Blvd",
         targetNeighborhood: "Financial District",
         targetFactoid: "Twin Peaks are NOT the tallest hills in San Francisco. At approximately 925 ft tall, they are actually a few feet shorter than Mt. Davidson at 928 ft. The northern peak is called Eureka, and the southern peak is called Noe.",
-        targetPhoto: "https://en.wikipedia.org/wiki/File:Twin_Peaks-San_Francisco.jpg",
+        targetPhoto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Twin_Peaks-San_Francisco.jpg/1200px-Twin_Peaks-San_Francisco.jpg",
         targetGooglePlacesId: "ChIJp71fQgh-j4ARV7YEtWUmni0",
         targetRating: "",
         targetVicinity: "",
