@@ -279,7 +279,6 @@ class CreateHunt extends Component {
     return (
       <div>
         <Navbar bg="dark" variant="dark" expand="lg">
-          <Container>
             <Navbar.Brand href="/">GeoHunt</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -288,10 +287,9 @@ class CreateHunt extends Component {
                 <Nav.Link href="/createhunt">Create Hunt</Nav.Link>              
               </Nav>
             </Navbar.Collapse>
-          </Container>
         </Navbar>
         <Jumbotron>
-          <h1 className="text-center">Create a Hunt for Others to Play Below</h1>          
+          <h3 className="text-center">Create a Hunt for Others to Play Below</h3>          
         </Jumbotron>
         <Container>
           <Row>
@@ -308,6 +306,7 @@ class CreateHunt extends Component {
                       <Form.Group as={Row}>
                         <Col sm={{ span: 8, offset: 4 }}>
                           <Button type="submit" onClick={this.handleTargetPopulate} size="sm" block>AutoPopulate</Button>
+                          <Form.Check label="AutoPopulate Boundary is San Francisco" />
                           {/* <Button type="submit" onClick={this.handleConsoleLogState} size="sm" block>Console Log State</Button> */}
                         </Col>
                       </Form.Group>                                            

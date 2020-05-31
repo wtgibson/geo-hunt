@@ -135,10 +135,10 @@ const huntSeed4 = {
         clue4: "Does tours of specific floors roughly once a month",
         clue5: "Features an art installation at the top",
         clue6: "Usually only one artist contributes",
-        clue7: "Has been sinking and slanting like the Leaning Tower of Piza",
+        clue7: "Has been sinking and slanting like the Leaning Tower of Pisa",
         clue8: "Eye of Sauron Halloween 2018",      
         clue9: "Formerly known as Transbay Tower",
-        clue10: "Has Salesforce as a tenent"
+        clue10: "Has Salesforce as a tenant"
     }
 }
 
@@ -272,7 +272,7 @@ const huntSeed8 = {
         clue5: "Cafe Niebaum-Coppola",
         clue6: "Now Cafe Zoetrope",
         clue7: "Alternative names include Flatiron Building",
-        clue8: "Sentinal Building",      
+        clue8: "Sentinel Building",      
         clue9: "American Zoetrope is located here",
         clue10: "Street is Columbus"
     }
