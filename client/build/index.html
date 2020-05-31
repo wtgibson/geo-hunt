@@ -19,32 +19,82 @@
 </head>
 
 <body>
+
+  <div class="modal fade" id="myModalTitle" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="staticBackdropLabel">About</h5> -->
+        </div>
+        <div class="modal-body justify-content-center">
+          <!-- <h3>GeoHunt</h3> -->
+          <p align="center"><img src="geohunt.png"></p>
+          <p align="center">V0.8.0</p>
+          <p align="center">A virtual geographical hunt for location targets around the city... and beyond!</p>
+          <!-- <p>Blah blah blah</p> -->
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick=startRules()>Rules</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal" onClick=startIntro()>Start Game</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalRules" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Rules</h5>
+        </div>
+        <div class="modal-body">
+          <p>Pegman wants to explore the city and conduct a scavenger hunt of famous locations, and he needs your
+            help!</p>
+
+          <p>Drag and drop pegman around the city, based on the hints you are given at the rate of <span
+              id="hintsperminute"></span> hints per minute.</p>
+
+
+
+          <p>You may zoom in/out as necessary. Drop pegman as close to the target as possible. It will be marked on
+            Google as point-of-interest. </p>
+
+          <p>If pegman is not on the map, he's hiding in the lower-right hand corner of the map. </p>
+
+          <p>Do it quickly, as you start with <span id="startwith"></span> points but loses <span
+              id="pointspersecond"></span> points
+            every second!</p>
+
+          <p>Once you arrive at the location, click the red <b>Arrived (I think)</b> button and confirm. However, if you
+            are NOT close enough to the target, you will be charged a <span id="majorpenalty"></span> point penalty!</p>
+
+          <p>The two buttons <b>Bearing</b> and <b>Distance</b> can be used to give you extra hint about the
+            target at the cost of <span id="minorpenalty"></span> per click. </p>
+
+        </div>
+        <div class="modal-footer justify-content-center">
+          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Rules</button> -->
+          <button type="button" class="btn btn-success" data-dismiss="modal" onClick=startIntro()>Start Game</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="myModalIntro" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">GeoHunt (Prototype)</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">GeoHunt V0.8.0</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Welcome to GeoHunt, an online scavenger game.</p>
-
-          <p>Pegman needs to go to the destination, except his 'friends' only gave him hints. Help move "pegman" to the
-            target given the hints/clues available. Once you think he's there, click <span>Arrived (I think)</span>
-            button. Do it fast, as you are losing points EVERY second. The faster you get Pegman there, the more points
-            you keep. However, if you got it wrong (or not close enough) you get points taken away! </p>
-
-          <p>You can drag Pegman around the map, and both streetview and the map will follow. </p>
-
-          <p>NOTE: You MUST drag pegman himself. You must drop pegman onto one of the blue paths. If you don't, pegman
-            will go back into hiding in the lower-right corner of the map, and you have to drag and drop him onto the
-            map again.
-          </p>
-
-          <p>Ready to play? Please select length of your expedition (i.e. how many hunts, max = 5).</p>
+          <!-- <p>Welcome to GeoHunt, an online scavenger game.</p> -->
+          <p>Please select length of your expedition (i.e. how many hunts, max = 5).</p>
 
           <select id="expeditionLength" name="Length">
             <option value="1">1</option>
@@ -436,6 +486,20 @@
       }
     }
 
+    function startRules() {
+      $("#startwith").html(startScore.toString())
+      $("#pointspersecond").html(persecond.toString())
+      $("#hintsperminute").html(hintfrequency.toString())
+      $("#majorpenalty").html(penalty.toString())
+      $("#minorpenalty").html(penalty2.toString())
+
+      $('#myModalRules').modal('show');
+    }
+
+    function startTitle() {
+      $('#myModalTitle').modal('show');
+    }
+
     function startIntro() {
       $('#myModalIntro').modal('show');
     }
@@ -443,6 +507,13 @@
     function startExpedition() {
       // curhunt=0
       totalScore = 0
+      curScore = startScore
+      items = []
+      data = []
+      curhunt = 0
+      curhint = 0
+      expeditino = [];
+
       $("#totalScore").val(totalScore)
 
       // init clues and stuff
@@ -734,7 +805,7 @@
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
   <script>
-    $(window).on('load', startIntro());
+    $(window).on('load', startTitle());
   </script>
 </body>
 
