@@ -122,11 +122,11 @@ app.post("/api/createhunt/", ({ body }, res) => {
   Hunt.collection.insertOne(newHunt)
     .then(data => {
       console.log(data.result.n + " records inserted!");
-      process.exit(0);
+      // process.exit(0);
     })
     .catch(err => {
       console.error(err);
-      process.exit(1);
+      // process.exit(1);
     });
 
 });
@@ -144,7 +144,11 @@ app.delete("/api/hunt/:id", (req, res) => {
 // Define any API routes before this runs
 // hunt is the client, index.html seems to be for react
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/hunt.html"));
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+app.get("/hunt", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 app.get("/createhunt", (req, res) => {

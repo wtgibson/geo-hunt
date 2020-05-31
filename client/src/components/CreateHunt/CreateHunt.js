@@ -20,43 +20,14 @@ class CreateHunt extends Component {
     super(props);
     
     this.state = {
-      // hunt: {
-      //   targetInfo: {
-      //       targetName: "",
-      //       targetId: "",
-      //       targetLat: "",
-      //       targetLng: "",
-      //       targetAccuracy: 0.025,
-      //       targetCategory: "",
-      //       targetLikes: "",
-      //       targetAddress: "",
-      //       targetCrossStreets: "",
-      //       targetNeighborhood: "",
-      //       targetFactoid: "Insert Factoid",
-      //       targetPhoto: "",
-      //       targetGooglePlacesId: "",
-      //       targetRating: "",
-      //       targetVicinity: "",
-      //       targetTypes: "",
-      //       targetURL: ""
-      //   },
-      //   clues: {
-      //       clue1: "Insert Clue 1",
-      //       clue2: "Insert Clue 2",
-      //       clue3: "Insert Clue 3",
-      //       clue4: "Insert Clue 4",
-      //       clue5: "Insert Clue 5",
-      //       clue6: "Insert Clue 6",
-      //       clue7: "Insert Clue 7",
-      //       clue8: "Insert Clue 8",      
-      //       clue9: "Insert Clue 9",
-      //       clue10: "Insert Clue 10"
-      //   }
-      // }
+      
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
+    this.handleTargetPopulate = this.handleTargetPopulate.bind(this);
+
   }
 
 
@@ -74,12 +45,28 @@ class CreateHunt extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    // this.setState({[id]:value
-    // });
     console.log(this.state)
-    // this.apiFoursquareSearch(this.state.hunt.targetName);
     this.createHunt(this.state);
   }
+
+  handleTargetPopulate = event => {
+    event.preventDefault();
+    var that = this
+
+    console.log(this.state)
+    console.log(this.state.targetName);
+    this.apiFoursquareSearch(this.state.targetName);
+    this.forceUpdateHandler()
+  }
+
+  handleConsoleLogState = event => {
+    event.preventDefault();
+    console.log(this.state);
+  }
+
+  forceUpdateHandler(){
+    this.forceUpdate();
+  };
 
   createHunt = (hunt) => {
     console.log(hunt) 
@@ -91,18 +78,13 @@ class CreateHunt extends Component {
   }
 
   componentDidMount() {
-    // console.log("Mounted");
-
-    // var seedHuntTargets = ["Twin Peaks", "Golden Gate Bridge", "Palace of Fine Arts", "Salesforce Tower", "Legion of Honor", "Palace Hotel", "War Memorial Opera House", "Columbus Tower", "Strawberry Hill", "Sutro Baths", "Pier 39"] 
-
-    // for (var i = 0; i < seedHuntTargets.length; i++) {
-    //   // console.log(i)
-    //   // this.apiFoursquareSearch(seedHuntTargets[i]);
-    // } 
+    console.log("Mounted");  
 
   }
 
   apiFoursquareSearch(huntTarget) {
+    console.log(huntTarget)
+    var that = this
     request(
       {
         url: 'https://api.foursquare.com/v2/venues/search',
@@ -134,15 +116,15 @@ class CreateHunt extends Component {
             console.log(i);                                            
             // console.log(target);
 
-            console.log("Target Location Name: " + target.name);
-            console.log("Target Location ID: " + target.id);
-            console.log("Target Location Latitude: " + target.location.lat);
-            console.log("Target Location Longitude: " + target.location.lng);    
-            console.log("Target Location Category: " + target.categories[0].pluralName);
-            // console.log("Target Location Category Icon: " + target.categories[0].icon.prefix + target.categories[0].icon.suffix);
-            console.log("Target Location Address: " + target.location.address + " " + target.location.formattedAddress[1] + " " + target.location.country);
-            console.log("Target Location Cross Street: " + target.location.crossStreet);
-            console.log("Target Location Neighborhood: " + target.location.neighborhood);  
+            // console.log("Target Location Name: " + target.name);
+            // console.log("Target Location ID: " + target.id);
+            // console.log("Target Location Latitude: " + target.location.lat);
+            // console.log("Target Location Longitude: " + target.location.lng);    
+            // console.log("Target Location Category: " + target.categories[0].pluralName);
+            // // console.log("Target Location Category Icon: " + target.categories[0].icon.prefix + target.categories[0].icon.suffix);
+            // console.log("Target Location Address: " + target.location.address + " " + target.location.formattedAddress[1] + " " + target.location.country);
+            // console.log("Target Location Cross Street: " + target.location.crossStreet);
+            // console.log("Target Location Neighborhood: " + target.location.neighborhood);  
             
             var name = target.name
             var id = target.id
@@ -153,6 +135,40 @@ class CreateHunt extends Component {
             var address = target.location.address + " " + target.location.formattedAddress[1] + " " + target.location.country
             var crossStreet = target.location.crossStreet
             var neighborhood = target.location.neighborhood
+
+            function apiFoursquareLikes(id, name) {
+              var targetId = id
+    
+              var name = name
+          
+              request(
+                {
+                  url: 'https://api.foursquare.com/v2/venues/' + targetId + '/likes',
+                  method: 'GET',
+                  qs: {
+                    client_id: 'WPTUDIG1IYQLHGO3JASEI035KXPADNU1T3VOSSGAJLXJHZTW',
+                    client_secret: 'GL2UART4XMP2F4KPIK0JBQRBARBAXKXKOO3GM5XYLCUA1HSS',   
+                    limit: 3,                                                  
+                    v: '20180323',
+                  },
+                },
+                function(err, res, body) {
+                  if (err) {
+                    console.error(err);
+                  } else {
+                    var response = JSON.parse(body)
+                    var foursquareData = response.response  
+                    console.log(foursquareData);
+                    console.log("------Likes------");
+                    var targetLikes = foursquareData.likes.summary
+                    console.log(name)
+                    // console.log("Target Location Likes: " + targetLikes);
+                    var likes = targetLikes
+                  }
+                }
+              );
+            }
+            apiFoursquareLikes(id, name)
             
           }
 
@@ -174,8 +190,8 @@ class CreateHunt extends Component {
             .then(contents => {
         
               var placeId = contents.candidates[0].place_id
-              console.log(name)
-              console.log("Google Places ID: " + placeId)
+              // console.log(name)
+              // console.log("Google Places ID: " + placeId)
               
               var googleDetailsQueryURL = 'https://maps.googleapis.com/maps/api/place/details/json?place_id=' + placeId + '&fields=name,rating,photo,vicinity,url,type,icon,formatted_phone_number&key=AIzaSyDPvvtVkeRawK_SaFf2Kb-MAUPjhV1GWNs'
               url = googleDetailsQueryURL
@@ -187,12 +203,12 @@ class CreateHunt extends Component {
                 // console.log(contents)
                 var googlePlacesData = contents.result
 
-                console.log("Google Places Name: " + googlePlacesData.name)
-                console.log("Google Places Phone Number: " + googlePlacesData.formatted_phone_number)
-                console.log("Google Places Icon: " + googlePlacesData.icon)
-                console.log("Google Places Rating: " + googlePlacesData.rating)
-                console.log("Google Places Vicinity: " + googlePlacesData.vicinity)
-                console.log("Google Places URL: " + googlePlacesData.url)
+                // console.log("Google Places Name: " + googlePlacesData.name)
+                // console.log("Google Places Phone Number: " + googlePlacesData.formatted_phone_number)
+                // console.log("Google Places Icon: " + googlePlacesData.icon)
+                // console.log("Google Places Rating: " + googlePlacesData.rating)
+                // console.log("Google Places Vicinity: " + googlePlacesData.vicinity)
+                // console.log("Google Places URL: " + googlePlacesData.url)
 
                 var googleName = googlePlacesData.name
                 var googlePhone = googlePlacesData.formatted_phone_number
@@ -204,16 +220,16 @@ class CreateHunt extends Component {
                 var googlePhotosLinks = []
 
                 for (var i = 0; i < googlePlacesData.types.length; i++) {
-                  console.log(i);
-                  console.log("Google Places Types: " + googlePlacesData.types[i])
+                  // console.log(i);
+                  // console.log("Google Places Types: " + googlePlacesData.types[i])
                   var googleType = googlePlacesData.types[i]
                   googleTypes.push(googleType)
 
                 }
                 for (var i = 0; i < googlePlacesData.photos.length; i++) {
-                  console.log(i);
-                  console.log(name)
-                  console.log("Google Places Photos References: " + googlePlacesData.photos[i].photo_reference)
+                  // console.log(i);
+                  // console.log(name)
+                  // console.log("Google Places Photos References: " + googlePlacesData.photos[i].photo_reference)
                   var googlePhotoReference = googlePlacesData.photos[i].photo_reference
 
                   
@@ -221,21 +237,37 @@ class CreateHunt extends Component {
                                     
                   var googlePhotosHref = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='+ tempGooglePhotoReference + '&key=AIzaSyDPvvtVkeRawK_SaFf2Kb-MAUPjhV1GWNs'
                   
-                  console.log(name)
-                  console.log("Google Places Href: " + googlePhotosHref) 
+                  // console.log(name)
+                  // console.log("Google Places Href: " + googlePhotosHref) 
                   
                   googlePhotosLinks.push(googlePhotosHref)
-                          
+                  
+                  that.setState({
+                    targetName: name,
+                    targetId: id,
+                    targetLat: lat,
+                    targetLng: lng,
+                    targetAccuracy: 0.025,
+                    targetCategory: category,
+                    targetAddress: address,
+                    targetCrossStreets: crossStreet,
+                    targetPhoto: googlePhotosHref,
+                    targetGooglePlacesId: placeId,
+                    targetRating: googleRating,
+                    targetVicinity: googleVicinity,
+                    targetTypes: googleTypes,
+                    targetURL: googleURL,                      
+                  });
+                                            
                 }
               })                    
               .catch(error => console.log(error))
             })                    
-            .catch(error => console.log(error))
-            
+            .catch(error => console.log(error))                        
             
           }         
 
-          apiGoogleInfo(name)
+          apiGoogleInfo(name)              
           
         }
 
@@ -271,17 +303,23 @@ class CreateHunt extends Component {
                       Location
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Name" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Name" onChange={this.handleInputChange} required/>
                       <Form.Check label="Required" />
-                    </Col>
-                  </Form.Group> 
+                      <Form.Group as={Row}>
+                        <Col sm={{ span: 8, offset: 4 }}>
+                          <Button type="submit" onClick={this.handleTargetPopulate} size="sm" block>AutoPopulate</Button>
+                          {/* <Button type="submit" onClick={this.handleConsoleLogState} size="sm" block>Console Log State</Button> */}
+                        </Col>
+                      </Form.Group>                                            
+                    </Col>                    
+                  </Form.Group>                                     
 
                   <Form.Group as={Row} controlId="targetLat">
                     <Form.Label column sm={2}>
                       Latitude
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Latitude" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Latitude" onChange={this.handleInputChange, this.forceUpdateHandler} defaultValue={this.state.targetLat} value={this.state.targetLat} required/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>
@@ -291,7 +329,7 @@ class CreateHunt extends Component {
                       Longitude
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Longitude" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Longitude" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.targetLng}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -301,7 +339,7 @@ class CreateHunt extends Component {
                       Category
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Category" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Category" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.targetCategory}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -311,7 +349,7 @@ class CreateHunt extends Component {
                       Address
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Address" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Address" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.targetAddress}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -321,7 +359,7 @@ class CreateHunt extends Component {
                       Cross Streets
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Cross Streets" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Cross Streets" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.targetCrossStreets}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -331,7 +369,7 @@ class CreateHunt extends Component {
                       Neighbor- hood
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Neighborhood" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Neighborhood" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.targetNeighborhood} required/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                                                                               
@@ -341,7 +379,7 @@ class CreateHunt extends Component {
                       Target Fun Fact
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Fun Fact" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Fun Fact" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.targetFactoid} required/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -351,7 +389,7 @@ class CreateHunt extends Component {
                       Target Photo Link
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="targetInfo" type="text" placeholder="Target Photo Link" onChange={this.handleInputChange}/>
+                      <Form.Control name="targetInfo" type="text" placeholder="Target Photo Link" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.targetPhoto}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group> 
@@ -366,7 +404,7 @@ class CreateHunt extends Component {
                       Clue #1
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #1" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #1" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue1}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -376,7 +414,7 @@ class CreateHunt extends Component {
                       Clue #2
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #2" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #2" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue2}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -386,7 +424,7 @@ class CreateHunt extends Component {
                       Clue #3
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #3" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #3" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue3}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -396,7 +434,7 @@ class CreateHunt extends Component {
                       Clue #4
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #4" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #4" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue4}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -406,7 +444,7 @@ class CreateHunt extends Component {
                       Clue #5
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #5" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #5" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue5}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -416,7 +454,7 @@ class CreateHunt extends Component {
                       Clue #6
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #6" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #6" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue6}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -426,7 +464,7 @@ class CreateHunt extends Component {
                       Clue #7
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #7" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #7" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue7}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -436,7 +474,7 @@ class CreateHunt extends Component {
                       Clue #8
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #8" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #8" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue8}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
@@ -446,7 +484,7 @@ class CreateHunt extends Component {
                       Clue #9
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #9" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #9" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue9}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>
@@ -456,7 +494,7 @@ class CreateHunt extends Component {
                       Clue #10
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control name="clues" type="text" placeholder="Clue #10" onChange={this.handleInputChange}/>
+                      <Form.Control name="clues" type="text" placeholder="Insert Clue #10" onChange={this.handleInputChange, this.forceUpdateHandler} value={this.state.clue10}/>
                       <Form.Check label="Required" />
                     </Col>
                   </Form.Group>                      
