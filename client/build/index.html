@@ -3,18 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <title>GeoHunt Index Build</title>
+  <title>GeoHunt SF</title>
   <style>
     #map,
     #pano {
-      height: 55vh;
+      height: 47vh;
       width: 67vw;
     }    
   </style>
-  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/favicon-16x16.png">
-  <link rel="manifest" href="../../assets/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="manifest" href="./assets/site.webmanifest">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -29,11 +29,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <!-- <h5 class="modal-title" id="staticBackdropLabel">About</h5> -->
         </div>
         <div class="modal-body justify-content-center">
-          <p align="center"><img src="../../assets/images/geohunt.png"></p>
+          <!-- <h3>GeoHunt</h3> -->
+          <p align="center"><img src="./assets/images/geohunt.png"></p>
           <p class="font-italic font-weight-light" align="center">V 0.8.0</p>
           <h5 align="center">A virtual geographical scavenger hunt for location targets around the San Francisco... and beyond!</h5>
+          <!-- <p>Blah blah blah</p> -->
         </div>
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-primary" data-dismiss="modal" onClick=startRules()>Rules</button>
@@ -81,6 +84,7 @@
 
         </div>
         <div class="modal-footer justify-content-center">
+          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Rules</button> -->
           <button type="button" class="btn btn-success" data-dismiss="modal" onClick=startIntro()>Start Game</button>
         </div>
       </div>
@@ -93,9 +97,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Expedition Preparation</h3>          
-          </button>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span> -->
         </div>
         <div class="modal-body">
+          <!-- <p>Welcome to GeoHunt, an online scavenger game.</p> -->
           <p>Please select length of your Expedition </p>
           <p class="font-weight-light font-italic"> (i.e. How many Hunts, Max = 5)</p>
 
@@ -104,7 +110,12 @@
             <option selected value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
-            <option value="5">5</option>            
+            <option value="5">5</option>
+            <!-- <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option> -->            
           </select>
 
         </div>
@@ -148,8 +159,11 @@
         <div class="modal-header">
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Begin Hunt</h3>          
         </div>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
         <div class="modal-body">
-          <p>Are you ready for Hunt number <span class="font-weight-bold" id="mycurrenthunt">0</span>?</p>
+          <p>Are you ready for Hunt #<span class="font-weight-bold" id="mycurrenthunt">0</span>?</p>
 
         </div>
         <div class="modal-footer">
@@ -198,9 +212,12 @@
         <div class="modal-header">
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Target Found!</h3>        
         </div>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
         <div class="modal-body">
 
-          <p>You found the target: <span class="font-weight-bold" id="yourtarget2"></span>!</p>
+          <p>You found the target <span class="font-weight-bold" id="yourtarget2"></span>!</p>
 
           <p><span id="targetphoto2"></span></p>
 
@@ -226,6 +243,9 @@
         <div class="modal-header">
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Not Close Enough</h3>          
         </div>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
         <div class="modal-body">
 
           <p>Sorry, but you are NOT close enough to the target!</p>
@@ -247,11 +267,14 @@
         <div class="modal-header">
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Bearing Hint</h3>          
         </div>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
         <div class="modal-body">
 
-          <p>Please confirm that you want a bearing hint? </p>
+          <p>Are you sure that you want a bearing hint? </p>
 
-          <p>You will suffer a <span class="font-weight-bold" id="mypenalty2"></span> <strong>points</strong> penalty if you choose to get the hint.</p>
+          <p>You will suffer a <span class="font-weight-bold" id="mypenalty2"></span> <strong>points</strong> penalty if you choose to get the hint</p>
 
         </div>
         <div class="modal-footer">
@@ -269,6 +292,9 @@
         <div class="modal-header">
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Bearing Hint</h3>          
         </div>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
         <div class="modal-body">
           <p><span id="bearinghint"></span></p>
         </div>
@@ -288,16 +314,16 @@
         </div>
         <div class="modal-body">
 
-          <p>Please confirm that you want a distance hint? </p>
+          <p>Are you sure that you want a distance hint? </p>
 
-          <p>You will suffer a <span class="font-weight-bold" id="mypenalty3"></span> <strong>points</strong> penalty if you choose to get the hint.</p>
+          <p>You will suffer a <span class="font-weight-bold" id="mypenalty3"></span> <strong>points</strong> penalty if you choose to get the hint</p>
 
           <p>You will be given a distance to 1 decimal place, EX: "Your target is 1.6 kilometers away."</p>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" onClick=getDistance2() data-dismiss="modal">Get Hint</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Never mind!</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Nevermind!</button>
         </div>
       </div>
     </div>
@@ -310,6 +336,9 @@
         <div class="modal-header">
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Distance Hint</h3>          
         </div>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
         <div class="modal-body">
           <p><span id="distancehint"></span></p>
         </div>
@@ -328,12 +357,12 @@
           <h3 class="modal-title w-100 text-center" id="staticBackdropLabel">Are you Certain?</h3>
         </div>
         <div class="modal-body">
-          <p>Are you certain you are within <span class="font-weight-bold" id="huntaccuracyconfirm">0</span> kilometers of the target? Please
+          <p>Are you sure you are within <span class="font-weight-bold" id="huntaccuracyconfirm">0</span> kilometers of the target? Please
             zoom in on your map to confirm, and perhaps, look aroound streetview.
 
           <p>If you are close enough, you will be congratulated.</p>
 
-          <p>If you are not close enough, you will be given a penalty of <span class="font-weight-bold" id="mypenalty4"></span> <strong>points</strong>.</p>
+          <p>If you are not close enough, you will be given a penalty of <span class="font-weight-bold" id="mypenalty4"></span> <strong>points</strong></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" onClick=isCloseEnough() data-dismiss="modal">I am
@@ -578,7 +607,7 @@
         dataSingle.photo = d.targetInfo.targetPhoto
         dataClues.push("Target category is " + d.targetInfo.targetCategory)
         dataClues.push(d.clues.clue1)
-        dataClues.push("Target name is " + noConsonants(d.targetInfo.targetName))
+        dataClues.push("Target name is  " + noConsonants(d.targetInfo.targetName))
         dataClues.push(d.clues.clue2)
         if (d.targetInfo.targetCrossStreets !== "") {
           dataClues.push("Target cross-street is " + d.targetInfo.targetCrossStreets)
@@ -710,7 +739,7 @@
     }
 
     function calcBearing() {
-      const dir = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest", "north"]
+      const dir = ["North", "Northeast", "East", "Southeast", "South", "Southwest", "West", "Northwest", "North"]
 
       start_latitude = curCenter.lat
       start_longitude = curCenter.lng

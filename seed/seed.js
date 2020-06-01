@@ -104,7 +104,7 @@ const huntSeed3 = {
     clue7: "Featured in film ‘Vertigo’",
     clue8: "Located in Marina District",
     clue9: "The target zip code is 94123",
-    clue10: "Most prominent building is an open rotunda"
+    clue10: "The most prominent building is an open rotunda"
   }
 }
 
@@ -272,7 +272,7 @@ const huntSeed8 = {
         clue5: "Cafe Niebaum-Coppola",
         clue6: "Now Cafe Zoetrope",
         clue7: "Alternative names include Flatiron Building",
-        clue8: "Sentinel Building",      
+        clue8: "An alternative name is Sentinel Building",      
         clue9: "American Zoetrope is located here",
         clue10: "Street is Columbus"
     }
@@ -302,8 +302,8 @@ const huntSeed9 = {
     clue1: "The target zip code is 94118",
     clue2: "Sounds like a Beatles Song, but not quite...",
     clue3: "Richmond District",
-    clue4: "Inside Park",
-    clue5: "Bridge Park",
+    clue4: "Inside largest urban park in the US",
+    clue5: "Near California Academy of Sciences",
     clue6: "Contains 110-ft tall artificial waterfall",
     clue7: "Also a pavilion presented by SF’s sister city, Taipei",
     clue8: "West of Shakespeare Garden",
@@ -339,7 +339,7 @@ const huntSeed10 = {
     clue4: "Located in Outer Richmond",
     clue5: "Built in 1896",
     clue6: "World’s largest of its kind",
-    clue7: "Includes an ice skating rink",
+    clue7: "Included an ice skating rink",
     clue8: "And 2700-seat amphitheater",
     clue9: "And a museum of stuffed and mounted animals, historic artifacts, and artwork",
     clue10: "Baths"
