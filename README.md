@@ -25,7 +25,7 @@ Project built while attending UC-Berkeley Full Stack Flex Bootcamp. This assignm
 
 To use the application simply use the deloyed site link below and begin your adventure:
 
-https://"placeholder".herokuapp.com/
+https://geo-hunt-game.herokuapp.com/
 
 ## Author Links
 
