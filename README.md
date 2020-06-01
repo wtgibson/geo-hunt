@@ -6,9 +6,9 @@ Project built while attending UC-Berkeley Full Stack Flex Bootcamp. This assignm
 
 ## Application Site
 
-![Site](images/"placeholder".png)
+![Site](images/GeoHunt.png)
 
-![Site](images/"placeholder".png)
+![Site](images/Create-Hunt.png)
 
 ## Technologies Used
 
