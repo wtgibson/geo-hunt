@@ -22,7 +22,7 @@
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "mongoose": "^5.9.15",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "request": "^2.88.2"
   },
   "devDependencies": {
