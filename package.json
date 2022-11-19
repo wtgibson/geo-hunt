@@ -26,6 +26,6 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   }
 }
